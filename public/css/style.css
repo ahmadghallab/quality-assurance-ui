@@ -1,11 +1,6 @@
 body {
   font-size: 14px;
 }
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  display: none;
-}
 ul {
   list-style: none;
 }
@@ -32,7 +27,6 @@ a:hover, a:focus, a:active {
   width: 90%;
   max-width: 1000px;
 }
-.rtl
 table, input, textarea, select, .highlighted, .custom_font {
   font-family: Consolas,"Liberation Mono",Menlo,Courier,monospace;
 }
@@ -40,17 +34,21 @@ table, input, textarea, select, .highlighted, .custom_font {
   box-shadow: 0 0.5rem 1rem rgba(0,0,0,.05), inset 0 -1px 0 rgba(0,0,0,.1);
 }
 .form-control {
-  box-shadow: none;
-  border:2px solid #e8ebed;
+  border: 0;
+  border-bottom: 1px solid #e8ebed !important;
+  background-color: transparent !important;
+  padding-left: 2px;
+  border-radius: 0;
   -webkit-appearance: none;
-  background-color: #e8ebed;
-  border-radius: 4px;
+  font-size: 13px !important;
+  padding-left: 2px;
 }
 .form-control:focus {
-  box-shadow: none;
-  border:2px solid #8c9aa6;
-  background-color: #fff;
-  border-radius: 4px;
+  border-color: #17a2b8 !important;
+}
+.form-control:disabled, .form-control[readonly] {
+  background-color: #E1E4E6;
+  border-color: #E1E4E6;
 }
 .editable, .editable:hover, .editable:focus, .highlighted  {
   text-decoration: underline;
@@ -59,6 +57,9 @@ table, input, textarea, select, .highlighted, .custom_font {
   padding: 2px 7px;
   border-radius: 4px;
   color: #17a2b8;
+}
+.checked {
+  background: #17a8be6c;
 }
 label {
   font-weight: 500;
@@ -82,50 +83,8 @@ label {
   background-color: #FF4136;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 3px 6px 0px, #E52318 0px -2px 0px 0px inset;
 }
-.border-bottom {
-  border-bottom: 1px solid #000 !important;
-}
-/* Autocomplete box */
-#autocompleteCard {
-  position: absolute;
-  border: 1px solid #dee2e6;
-  background-color: #fff;
-  border-radius: 4px;
-  left: 0;
-  right: 0;
-  margin-top: 10px;
-  padding: 10px 0;
-  z-index: 1;
-}
-#autocompleteCard div {
-  padding:3px 15px;
-  margin: 0;
-  cursor: pointer;
-  position: relative;
-}
-#autocompleteCard div p {
-  margin-bottom: 0;
-}
-.selectedCust,
-#autocompleteCard div:hover {
-  background-color: rgb(68, 138, 255);
-  color: #fff;
-  transition: background-color 0.2s ease;
-}
-.itemName {
-  position: relative;
-  display: block;
-}
-.autocompleteQty { 
-  position: absolute;
-  right: 0;
-  margin-right: 15px;
-  top: 0;
-  margin-top: 2.5px;
-  background-color: #7DAEFF;
-  padding: 0 7px;
-  border-radius: 4px;
-  color: #fff;
+.btn, .btn:focus, .form-control, .form-control:focus, .in-invalid:focus, .custom-control-input:focus~.custom-control-label::before {
+  box-shadow: none !important;
 }
 @media only print {
   body {

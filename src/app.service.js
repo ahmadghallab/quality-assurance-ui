@@ -21,7 +21,27 @@ const appService = {
                     reject(error.response)
                 })
         })
-    }
+    },
+    listDepartments () {
+        return new Promise((resolve, reject) => {
+            axios.get('/department')
+                .then(response => {
+                    resolve(response.data)
+                }).catch(error => {
+                    reject(error.response)
+                })
+        })
+    },
+    postCriterion (data) {
+        return new Promise((resolve, reject) => {
+          axios.post('/criterion', data)
+            .then(response => {
+              resolve(response.data)
+            }).catch(response => {
+              reject(response.status)
+            })
+        })
+    },
 }
 
 export default appService
