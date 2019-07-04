@@ -9,9 +9,28 @@
           <li class="mt-1" v-for="(criterion, criterionIdx) in department.criteria" v-bind:key="criterionIdx">
             <a href="javascript:void(0)" 
               class="highlighted"
-              v-on:click="check(criterion.id)">
+              v-on:click="editCriterionModal(criterion.id)">
               {{ criterion.name }}
             </a>
+            <Modal v-if="toggleEditCriterionModal && selectedCriterion == criterion.id ">
+              <div slot="body">
+                <form v-on:submit.prevent="editCriterion(criterion.id, departmentIdx, criterionIdx)">
+                  <div class="form-group">
+                    <label for="criterionName">Name</label>
+                    <input type="text"
+                      v-model="criterion.name" 
+                      class="form-control"  
+                      placeholder="+ add criterion">
+                  </div>
+                  <button type="submit" 
+                    class="btn btn-info btn-sm mr-2"
+                    v-on:click="toggleEditCriterionModal = false">Save</button>
+                  <button type="button" 
+                    class="btn btn-light btn-sm"
+                    v-on:click="toggleEditCriterionModal = false">Cancel</button>
+                </form>
+              </div>
+            </Modal>
           </li>
           <div class="row mt-2">
             <div class="col-8 col-sm-6 col-md-4">
@@ -29,7 +48,10 @@
       <div class="row">
         <div class="col-8 col-sm-6 col-md-4">
           <div class="form-group">
-            <input type="text" class="form-control" placeholder="+ add department">
+            <input type="text" class="form-control"
+              v-model="departmentName" 
+              placeholder="+ add department"
+              v-on:keydown.enter="postDepartment()">
           </div>
         </div>
       </div>
@@ -39,31 +61,56 @@
 <script>
 import appService from '../app.service.js'
 import Loader from '../components/Loader.vue'
+import Modal from '../components/Modal.vue'
 
 export default {
   components: {
-    Loader
+    Loader,
+    Modal
   },
   data () {
     return {
       listDepartmentsLoader: true,
+      toggleEditCriterionModal: false,
+      selectedCriterion: null,
+      departmentName: null,
       checkedCriteria: [],
       criterionName: [],
       departments: []
     }
   },
   methods: {
+    editCriterionModal(criterionId) {
+      this.selectedCriterion = criterionId
+      this.toggleEditCriterionModal = true
+    },
     postCriterion(departmentId, departmentIdx) {
       appService.postCriterion({
         department: departmentId,
         name: this.criterionName[departmentIdx],
       })
       .then((data) => {
-        this.criterionName[departmentIdx] = ''
+        this.criterionName[departmentIdx] = null
         this.departments[departmentIdx].criteria.push(data)
       }).catch(() => {
         //
       })
+    },
+    editCriterion(criterionId, departmentIdx, criterionIdx) {
+      appService.editCriterion({
+        id: criterionId,
+        name: this.departments[departmentIdx].criteria[criterionIdx].name,
+      })
+      .then((data) => {
+        this.toggleEditCriterionModal = false
+      })
+    },
+    postDepartment() {
+      appService.postDepartment({name: this.departmentName})
+        .then((data) => {
+          this.departmentName = null
+          this.departments.push(data)
+        })
     },
     listDepartments () {
       appService.listDepartments()

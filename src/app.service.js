@@ -42,6 +42,26 @@ const appService = {
             })
         })
     },
+    editCriterion (data) {
+        return new Promise((resolve, reject) => {
+          axios.patch(`/criterion/${data.id}`, data)
+            .then(response => {
+              resolve(response.data)
+            }).catch(response => {
+              reject(response.status)
+            })
+        })
+      },
+    postDepartment (data) {
+        return new Promise ((resolve, reject) => {
+            axios.post('/department', data)
+                .then(response => {
+                    resolve(response.data)
+                }).catch(response => {
+                    reject(response.status)
+                })
+        })
+    }
 }
 
 export default appService
