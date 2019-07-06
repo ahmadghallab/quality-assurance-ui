@@ -18,7 +18,7 @@ label {
   height: 45px;
 }
 a {
-  color: #17a2b8;
+  color: #17a2b8; 
 }
 a:hover, a:focus, a:active {
   color: #0f7888;
