@@ -157,6 +157,12 @@ const appService = {
           reject(response.status)
         })
     })
+  },
+  saveUnitEvaluation (data) {
+    return new Promise((resolve, reject) => {
+      axios.post('/unit/evaluation/save', data)
+        .then(() => resolve()).catch(response => reject(response.status))
+    })
   }
 }
 

@@ -5,7 +5,7 @@
       <li class="mb-1" v-for="(department, departmentIdx) in departments" v-bind:key="departmentIdx">
         <a href="javascript:void(0)"
           v-on:click="editDepartmentModal(department.id)" 
-          class="highlighted">{{ department.name }}
+          class="highlight info-highlight">{{ department.name }}
         </a>
         <Modal v-if="toggleEditDepartmentModal && selectedDepartment == department.id ">
           <div slot="body">
@@ -31,7 +31,7 @@
         <ul class="nested-ul">
           <li class="mt-1" v-for="(criterion, criterionIdx) in department.criteria" v-bind:key="criterionIdx">
             <a href="javascript:void(0)" 
-              class="highlighted"
+              class="highlight info-highlight"
               v-on:click="editCriterionModal(criterion.id)">
               {{ criterion.name }}
             </a>

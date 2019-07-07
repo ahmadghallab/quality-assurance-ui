@@ -5,13 +5,14 @@ ul {
   list-style: none;
 }
 .nested-ul {
-  border-left: 1px dotted #17a2b8;
+  border-left: 1px dotted #e8ebed;
 }
 label {
   cursor: pointer;
 }
 .wrapper {
   margin: 25px auto;
+  font-family: Consolas,"Liberation Mono",Menlo,Courier,monospace;
 }
 .bootstrap-nav {
   margin: 0 auto;
@@ -21,14 +22,11 @@ a {
   color: #17a2b8; 
 }
 a:hover, a:focus, a:active {
-  color: #0f7888;
+  color: inherit;
 }
 .wrapper, .bootstrap-nav {
   width: 80%;
   max-width: 900px;
-}
-table, input, textarea, select, .highlighted, .custom_font {
-  font-family: Consolas,"Liberation Mono",Menlo,Courier,monospace;
 }
 .customNav {
   box-shadow: 0 0.5rem 1rem rgba(0,0,0,.05), inset 0 -1px 0 rgba(0,0,0,.1);
@@ -50,13 +48,27 @@ table, input, textarea, select, .highlighted, .custom_font {
   background-color: #E1E4E6;
   border-color: #E1E4E6;
 }
-.editable, .editable:hover, .editable:focus, .highlighted  {
+.highlight {
   text-decoration: underline;
   text-decoration-style: dotted;
-  background: #17a3b81a;
   padding: 2px 7px;
   border-radius: 4px;
+}
+.light-highlight, .light-highlight:hover, .light-highlight:focus {
+  background: #f1f2f3;
+  color: #585858;
+}
+.info-highlight, .info-highlight:hover, .info-highlight:focus {
+  background: #17a3b81a;
   color: #17a2b8;
+}
+.success-highlight, .success-highlight:hover, .success-highlight:focus {
+  background: #e7fcd0;
+  color: #4b8010;
+}
+.danger-highlight, .danger-highlight:hover, .danger-highlight:focus {
+  background: rgb(252, 234, 233);
+  color: rgb(187, 13, 3);
 }
 .checked {
   background: #17a8be6c;

@@ -8,30 +8,25 @@
                 </div>
                 <Loader v-if="listUnitEvaluationLoader" />
                 <div v-else>
-                    <ul class="nested-ul">
+                    <ul class="list-unstyled">
                         <li class="mb-1" v-for="(evaluation, evaluationIdx) in unitEvaluations" v-bind:key="evaluationIdx">
                             <div class="btn-group">
                                 <a href="javascript:void(0)" 
                                     v-on:click="toggleEditEvaluationList(evaluationIdx)"
-                                    class="highlighted">
+                                    class="highlight light-highlight">
                                     {{ evaluation.month + '.' + evaluation.year }}
                                 </a>
-                                <!-- <div class="dropdown-menu custom_font"
-                                v-bind:class="[selectedEvaluation == evaluationIdx ? 'show' : '']">
-                                    <a class="dropdown-item text-danger" href="javascript:void(0)"
-                                        v-on:click="toggleDeleteEvaluationModal = true">Delete</a>
-                                </div> -->
                             </div>
-                            <EditUnitEvaluation
-                                v-if="toggleEditEvaluation && selectedEvaluation == evaluationIdx" 
+                            <EditUnitEvaluation 
                                 v-bind:unitId="unitId" 
                                 v-bind:month="evaluation.month"
-                                v-bind:year="evaluation.year" 
+                                v-bind:year="evaluation.year"
+                                v-if="toggleEditEvaluation && selectedEvaluation == evaluationIdx" 
                             />
                             <Modal width="450px" v-if="toggleDeleteEvaluationModal && selectedEvaluation == evaluationIdx">
-                                <div slot="body" class="custom_font">
+                                <div slot="body">
                                     <p class="text-muted">
-                                    You are about to delete <span class="highlighted">{{ evaluation.month + '.' + evaluation.year }}</span> evaluation. No one will be able to access this evaluation ever again.
+                                    You are about to delete <span class="highlight info-highlight">{{ evaluation.month + '.' + evaluation.year }}</span> evaluation. No one will be able to access this evaluation ever again.
                                     </p>
                                     <p class="font-weight-bold my-4">Are you absolutely positive? There's no undo.</p>
                                     <div>
@@ -58,26 +53,12 @@
                                 </div>
                                 <div class="col-auto">
                                     <button type="submit" class="btn btn-light btn-sm" :disabled="createUnitEvalValidator">
-                                        {{ creatingUnitEvaluation ? 'Saving' : 'Save' }}
+                                        {{ creatingUnitEvaluation ? 'Creating' : 'Create' }}
                                     </button>
                                 </div>
                             </div>
                         </form>
                     </ul>
-                    <!-- <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Month</th>
-                                <th>Result</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(evaluation, evaluationIdx) in unitEvaluations" v-bind:key="evaluationIdx">
-                                <td><span class="highlighted">{{ evaluation.month + '.' + evaluation.year }}</span></td>
-                                <td><span class="highlighted">76%</span></td>
-                            </tr>
-                        </tbody>
-                    </table> -->
                 </div>
             </div>
         </div>

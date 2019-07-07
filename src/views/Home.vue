@@ -5,7 +5,7 @@
       <li class="mb-1" v-for="(management, managementIdx) in managements" v-bind:key="managementIdx">
         <a href="javascript:void(0)"
           v-on:click="editManagementModal(management.id)" 
-          class="highlighted">{{ management.name }}
+          class="highlight info-highlight">{{ management.name }}
         </a>
         <Modal v-if="toggleEditManagementModal && selectedManagement == management.id ">
           <div slot="body">
@@ -32,7 +32,7 @@
           <li class="mt-1" v-for="(unit, unitIdx) in management.units" v-bind:key="unitIdx">
             <div class="btn-group">
               <a href="javascript:void(0)"
-                v-on:click="toggleUnitDropdown(unit.id)" class="highlighted"
+                v-on:click="toggleUnitDropdown(unit.id)" class="highlight info-highlight"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ unit.name }}</a>
               <div class="dropdown-menu custom_font"
                 v-bind:class="[selectedUnit == unit.id ? 'show' : '']">
