@@ -121,6 +121,42 @@ const appService = {
           reject(response.status)
         })
     })
+  },
+  listUnitEvaluation (unitId) {
+    return new Promise((resolve, reject) => {
+      axios.get(`/unit/${unitId}/evaluation/list`)
+        .then(response => {
+          resolve(response.data)
+        }).catch(response => {
+          reject(response.status)
+        })
+    })
+  },
+  deleteUnitEvaluation (data) {
+    return new Promise((resolve, reject) => {
+      axios.delete(`/unit/${data.unitId}/evaluation/delete?month=${data.month}&year=${data.year}`)
+        .then(() => {
+          resolve()
+        }).catch(response => {
+          reject(response.status)
+        })
+    })
+  },
+  createUnitEvaluation (data) {
+    return new Promise((resolve, reject) => {
+      axios.post(`/unit/${data.unitId}/evaluation/create`, data)
+        .then(() => resolve()).catch(response => { reject(response.status) })
+    })
+  },
+  editUnitEvaluation (data) {
+    return new Promise((resolve, reject) => {
+      axios.get(`/unit/${data.unitId}/evaluation/edit?month=${data.month}&year=${data.year}`)
+        .then(response => {
+          resolve(response.data)
+        }).catch(response => {
+          reject(response.status)
+        })
+    })
   }
 }
 

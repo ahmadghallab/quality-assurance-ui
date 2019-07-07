@@ -24,8 +24,8 @@ a:hover, a:focus, a:active {
   color: #0f7888;
 }
 .wrapper, .bootstrap-nav {
-  width: 90%;
-  max-width: 1000px;
+  width: 80%;
+  max-width: 900px;
 }
 table, input, textarea, select, .highlighted, .custom_font {
   font-family: Consolas,"Liberation Mono",Menlo,Courier,monospace;

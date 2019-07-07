@@ -46,7 +46,7 @@ export default {
   position: relative;
   margin: 3rem auto;
   pointer-events: none;
-  width: 90%;
+  width: 80%;
   border-radius: 4px;
   border:1px solid #dee2e6;
   padding: 25px;
