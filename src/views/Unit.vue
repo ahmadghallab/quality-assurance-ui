@@ -8,7 +8,7 @@
                 </div>
                 <Loader v-if="listUnitEvaluationLoader" />
                 <div v-else>
-                    <ul class="list-unstyled">
+                    <ul class="list-unstyled pr-0">
                         <li class="mb-1" v-for="(evaluation, evaluationIdx) in unitEvaluations" v-bind:key="evaluationIdx">
                             <div class="btn-group">
                                 <a href="javascript:void(0)" 
@@ -46,10 +46,10 @@
                         <form v-on:submit.prevent="createUnitEvaluation()">
                             <div class="form-row mt-4">
                                 <div class="col-2 col-md-1">
-                                    <input type="number" v-model="month" class="form-control" placeholder="month">
+                                    <input type="number" v-model="month" class="form-control" placeholder="شهر">
                                 </div>
                                 <div class="col-2 col-md-1">
-                                    <input type="number" v-model="year" class="form-control" placeholder="year">
+                                    <input type="number" v-model="year" class="form-control" placeholder="سنة">
                                 </div>
                                 <div class="col-auto">
                                     <button type="submit" class="btn btn-light btn-sm" :disabled="createUnitEvalValidator">

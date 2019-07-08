@@ -19,7 +19,7 @@
   border-radius: 50%;
   border-width: 3px;
   border-style: solid;
-  border-color: #17a2b8 #17a3b81a #17a3b81a;
+  border-color: rgb(68, 138, 255) #f1f8ff #f1f8ff;
   border-image: initial;
   animation: circleSpinner 1s linear 0s infinite normal none running;
 }
