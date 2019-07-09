@@ -5,7 +5,7 @@ ul {
   list-style: none;
 }
 .nested-ul {
-  border-right: 1px dotted #e8ebed;
+  border-right: 1px dotted #000;
 }
 label {
   cursor: pointer;
@@ -118,22 +118,16 @@ label {
     color: #000 !important;
     padding: 0;
   }
-  .checked {
-    padding: 2px 7px !important;
-    border-radius: 0 !important;
-    border: 1px solid #000 !important;
-  }
-  .nested-ul {
-    border-color: #000 !important;
+  .bordered {
+    border: 1px solid #000;
+    border-style: dotted;
+    border-radius: 0;
+    padding: 2px 5px;
   }
   .wrapper {
     width: 100%;
+    max-width: 100%;
     margin: 0;
-    direction: rtl;
-    text-align: right;
-  }
-  .nested-ul {
-    border-right: 1px dotted #e8ebed;
   }
   
 }

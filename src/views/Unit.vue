@@ -8,7 +8,7 @@
                 </div>
                 <Loader v-if="listUnitEvaluationLoader" />
                 <div v-else>
-                    <ul class="list-unstyled pr-0">
+                    <ul class="pr-0">
                         <li class="mb-1" v-for="(evaluation, evaluationIdx) in unitEvaluations" v-bind:key="evaluationIdx">
                             <div class="btn-group">
                                 <a href="javascript:void(0)" 
@@ -43,7 +43,7 @@
                             </Modal>
                         </li>
                         <p class="text-muted" v-if="!unitEvaluations.length">No evaluations yet</p>
-                        <form v-on:submit.prevent="createUnitEvaluation()">
+                        <!-- <form v-on:submit.prevent="createUnitEvaluation()">
                             <div class="form-row mt-4">
                                 <div class="col-2 col-md-1">
                                     <input type="number" v-model="month" class="form-control" placeholder="شهر">
@@ -57,7 +57,7 @@
                                     </button>
                                 </div>
                             </div>
-                        </form>
+                        </form> -->
                     </ul>
                 </div>
             </div>
