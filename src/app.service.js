@@ -150,7 +150,7 @@ const appService = {
   },
   editUnitEvaluation (data) {
     return new Promise((resolve, reject) => {
-      axios.get(`/unit/${data.unitId}/evaluation/edit?month=${data.month}&year=${data.year}`)
+      axios.get(`/unit/${data.unitId}/evaluation?month=${data.month}&year=${data.year}`)
         .then(response => {
           resolve(response.data)
         }).catch(response => {

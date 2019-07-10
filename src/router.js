@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from './views/Home'
 import Department from './views/Department'
 import Unit from './views/Unit'
+import Evaluation from './views/Evaluation'
 
 Vue.use(Router)
 
@@ -24,6 +25,11 @@ export default new Router({
       path: '/unit/:id',
       name: 'unit',
       component: Unit
+    },
+    {
+      path: '/unit/:id/evaluation',
+      name: 'evaluation',
+      component: Evaluation
     }
   ]
 })

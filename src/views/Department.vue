@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="default-card">
     <Loader v-if="listDepartmentsLoader" />
     <ul class="list-unstyled" v-else>
       <li class="mb-1" v-for="(department, departmentIdx) in departments" v-bind:key="departmentIdx">
@@ -29,42 +29,55 @@
           </div>
         </Modal>
         <ul class="nested-ul">
-          <li class="mt-1" v-for="(criterion, criterionIdx) in department.criteria" v-bind:key="criterionIdx">
+          <li class="mt-2" v-for="(criterion, criterionIdx) in department.criteria" v-bind:key="criterionIdx">
             <a href="javascript:void(0)" 
-              class="highlight light-highlight"
+              class="font-weight-bold"
               v-on:click="editCriterionModal(criterion.id)">
               {{ criterion.name }}
             </a>
+            <ul class="nested-ul" v-if="criterion.suggested_solution">
+              <li class="mt-2 text-muted">
+                {{ criterion.suggested_solution }}
+              </li>
+            </ul>
             <Modal v-if="toggleEditCriterionModal && selectedCriterion == criterion.id ">
               <div slot="body">
                 <form v-on:submit.prevent="editCriterion(criterion.id, departmentIdx, criterionIdx)">
                   <div class="form-group">
-                    <label for="criterionName">Criterion Name</label>
                     <input type="text"
                       id="criterionName"
                       autocomplete="off"
                       v-model="criterion.name" 
                       class="form-control"  
-                      placeholder="+ add criterion">
+                      placeholder="+ المعيار">
+                  </div>
+                  <div class="form-group">
+                    <textarea
+                      id="suggSolution"
+                      autocomplete="off"
+                      class="form-control"  
+                      v-model="criterion.suggested_solution" 
+                      placeholder="+ الحل المقترح">
+                    </textarea>
                   </div>
                   <button type="submit" 
-                    class="btn btn-info btn-sm mr-2"
-                    v-on:click="toggleEditCriterionModal = false">Save</button>
+                    class="btn btn-info ml-2"
+                    v-on:click="toggleEditCriterionModal = false">حفظ</button>
                   <button type="button" 
-                    class="btn btn-light btn-sm"
-                    v-on:click="toggleEditCriterionModal = false">Cancel</button>
+                    class="btn btn-light"
+                    v-on:click="toggleEditCriterionModal = false">الغاء</button>
                 </form>
               </div>
             </Modal>
           </li>
           <div class="row mt-2">
-            <div class="col-8 col-sm-6 col-md-4">
+            <div class="col-12 col-sm-8">
               <div class="form-group">
                 <input type="text"
                   v-model="criterionName[departmentIdx]"
                   autocomplete="off"
                   class="form-control"  
-                  placeholder="+ add criterion"
+                  placeholder="+ أضف معيار"
                   v-on:keydown.enter="postCriterion(department.id, departmentIdx)">
               </div>
             </div>
@@ -77,7 +90,7 @@
             <input type="text" class="form-control"
               autocomplete="off"
               v-model="departmentName" 
-              placeholder="+ add department"
+              placeholder="+ أضف قسم"
               v-on:keydown.enter="postDepartment()">
           </div>
         </div>
@@ -132,6 +145,7 @@ export default {
       appService.editCriterion({
         id: criterionId,
         name: this.departments[departmentIdx].criteria[criterionIdx].name,
+        suggested_solution: this.departments[departmentIdx].criteria[criterionIdx].suggested_solution,
       })
       .then((data) => {
         this.toggleEditCriterionModal = false

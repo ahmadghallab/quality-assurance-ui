@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="default-card">
     <Loader v-if="listManagementsLoader" />
     <ul class="list-unstyled" v-else>
       <li class="mb-1" v-for="(management, managementIdx) in managements" v-bind:key="managementIdx">
@@ -29,12 +29,12 @@
           </div>
         </Modal>
         <ul class="nested-ul">
-          <li class="mt-1" v-for="(unit, unitIdx) in management.units" v-bind:key="unitIdx">
+          <li class="mt-2" v-for="(unit, unitIdx) in management.units" v-bind:key="unitIdx">
             <div class="btn-group">
               <a href="javascript:void(0)"
-                v-on:click="toggleUnitDropdown(unit.id)" class="highlight light-highlight"
+                v-on:click="toggleUnitDropdown(unit.id)" class="font-weight-bold"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ unit.name }}</a>
-              <div class="dropdown-menu custom_font"
+              <div class="dropdown-menu"
                 v-bind:class="[selectedUnit == unit.id ? 'show' : '']">
                 <router-link class="dropdown-item" 
                   :to="{ name: 'unit', params: {id: unit.id} }">Display</router-link>

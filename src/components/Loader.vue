@@ -13,13 +13,13 @@
   }
 }
 .circle-spinner {
-  margin: 25px 0;
+  margin: 50px auto;
   width: 25px;
   height: 25px;
   border-radius: 50%;
   border-width: 3px;
   border-style: solid;
-  border-color: rgb(68, 138, 255) #f1f8ff #f1f8ff;
+  border-color: #17a2b8 #e7f6f8 #e7f6f8;
   border-image: initial;
   animation: circleSpinner 1s linear 0s infinite normal none running;
 }

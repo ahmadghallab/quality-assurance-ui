@@ -40,7 +40,7 @@ export default {
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(100,107,131,.4);
 }
 .dialog-wrapper {
   position: relative;
@@ -48,7 +48,6 @@ export default {
   pointer-events: none;
   width: 80%;
   border-radius: 4px;
-  border:1px solid #dee2e6;
   padding: 25px;
   background-color: #fff;
 }

@@ -1,22 +1,27 @@
 <template>
-<nav class="customNav">
+<nav class="bg-info customNav fixed-top">
     <div class="row justify-content-between bootstrap-nav">
+        <div class="col-auto"></div>
         <div class="col-auto align-self-center">
-            <p class="mb-0 text-white font-weight-bold">رقابة الجودة</p>
-        </div>
-        <div class="col-auto align-self-center">
-            <ul class="list-inline mb-0">
+            <ul class="list-inline mb-0 pr-0">
                 <li class="list-inline-item">
-                    <router-link class="text-white" :to="{name: 'home'}">الرئيسية</router-link>
+                    <router-link class="font-weight-bold nav-link" :to="{name: 'home'}">
+                        مرحبا
+                    </router-link>
                 </li>
                 <li class="list-inline-item">
-                    <router-link class="text-white" :to="{name: 'department'}">المعايير</router-link>
+                    <router-link class="font-weight-bold nav-link" :to="{name: 'home'}">
+                        الادارات
+                    </router-link>
                 </li>
-                <li class="list-inline-item mr-3 pr-3 nav-user">
-                    <router-link class="text-white" :to="{name: 'home'}">مرحبا</router-link>
+                <li class="list-inline-item">
+                    <router-link class="font-weight-bold nav-link" :to="{name: 'department'}">
+                        المعايير
+                    </router-link>
                 </li>
             </ul>
         </div>
+        <div class="col-auto"></div>
     </div>
 </nav>
 </template>

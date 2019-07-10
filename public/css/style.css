@@ -1,17 +1,42 @@
 body {
-  font-size: 14px;
+  background-color: #e6ecf0;
+}
+body, .btn {
+  font-size: 14px !important;
+}
+.nav-link {
+  color: rgba(255,255,255,0.8);
+}
+.router-link-exact-active, .nav-link:hover, .nav-link:focus {
+  color: rgba(255,255,255,1);
+}
+.default-card, .card__header, .card__body, .card__footer {
+  background-color: #ffffff;
+  padding: 20px;
+  line-height: 1.375em;
+}
+.default-card {
+  border-radius: 7px;
+  margin-bottom: 20px;
+}
+.card__header {
+  border-radius: 7px 7px 0 0;
+}
+.card__footer {
+  border-radius: 0 0 7px 7px;
+  margin-bottom: 20px;
 }
 ul {
   list-style: none;
 }
 .nested-ul {
-  border-right: 1px dotted #000;
+  border-right: 1px solid #e6ecf0;
 }
 label {
   cursor: pointer;
 }
 .wrapper {
-  margin: 25px auto;
+  margin: 70px auto 25px;
 }
 .bootstrap-nav {
   margin: 0 auto;
@@ -21,11 +46,8 @@ label {
   font-family: Consolas,"Liberation Mono",Menlo,Courier,monospace;
   direction: rtl;
   text-align: right;
-  width: 80%;
-  max-width: 900px;
-}
-.nav-user {
-  border-right: 1px solid rgba(255,255,255,0.3);
+  width: 85%;
+  max-width: 950px;
 }
 a {
   color: #585858; 
@@ -35,25 +57,23 @@ a:hover, a:focus, a:active {
   text-decoration-style: dotted;
 }
 .customNav {
-  background: #abb8c2;
   box-shadow: 0 0.5rem 1rem rgba(0,0,0,.05);
 }
+.dropdown-menu {
+  right: 0 !important;
+}
 .form-control {
-  border: 0;
-  border-bottom: 1px solid #e8ebed !important;
-  background-color: transparent !important;
-  padding-left: 2px;
-  border-radius: 0;
-  -webkit-appearance: none;
+  border:2px solid #f4f7f9;
+  border-radius: 4px;
+  background-color: #f4f7f9;
   font-size: 13px !important;
-  padding-left: 2px;
 }
 .form-control:focus {
-  border-color: rgb(68, 138, 255) !important;
+  border-color: #e6ecf0 !important;
 }
 .form-control:disabled, .form-control[readonly] {
-  background-color: #E1E4E6;
-  border-color: #E1E4E6;
+  background-color: #e6ecf0;
+  border-color: #e6ecf0;
 }
 .highlight {
   padding: 2px 7px;
@@ -62,6 +82,9 @@ a:hover, a:focus, a:active {
 .primary-highlight, .primary-highlight:hover, .primary-highlight:focus {
   background-color: rgb(68, 138, 255);
   color: #fff;
+}
+.light {
+  background-color: #f4f7f9;
 }
 .light-highlight, .light-highlight:hover, .light-highlight:focus {
   background: #abb8c2;
@@ -78,9 +101,6 @@ a:hover, a:focus, a:active {
 .danger-highlight, .danger-highlight:hover, .danger-highlight:focus {
   background: #e81c4f;
   color: #fff;
-}
-label {
-  font-weight: 500;
 }
 .alert {
   padding: 15px 20px;
@@ -101,7 +121,7 @@ label {
   background-color: #FF4136;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 3px 6px 0px, #E52318 0px -2px 0px 0px inset;
 }
-.btn, .btn:focus, .form-control, .form-control:focus, .in-invalid:focus, .custom-control-input:focus~.custom-control-label::before {
+.btn:focus, .form-control, .form-control:focus, .in-invalid:focus, .custom-control-input:focus~.custom-control-label::before {
   box-shadow: none !important;
 }
 @media only print {
