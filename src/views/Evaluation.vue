@@ -67,11 +67,6 @@
                                 <span v-else>-</span>
                                 {{ evaluation.criterion__name }}
                             </a>
-                            <ul class="nested-ul" v-if="!evaluation.checked">
-                                <li class="mt-2">
-                                    {{ evaluation.criterion__suggested_solution }}
-                                </li>
-                            </ul>
                         </li>
                     </ul>
                 </div>

@@ -33,16 +33,16 @@
                             <Modal width="450px" v-if="toggleDeleteEvaluationModal && selectedEvaluation == evaluationIdx">
                                 <div slot="body" class="text-left">
                                     <p class="text-muted">
-                                    You are about to delete <span class="highlight info-highlight">{{ evaluation.month + '.' + evaluation.year }}</span> evaluation. No one will be able to access this evaluation ever again.
+                                    You are about to delete <span class="highlight info-highlight">{{ evaluation.month + '.' + evaluation.year }}</span> evaluation. No one will be able to access this evaluation ever again
                                     </p>
-                                    <p class="font-weight-bold my-4">Are you absolutely positive? There's no undo.</p>
+                                    <p class="font-weight-bold my-4">Are you absolutely positive? There's no undo</p>
                                     <div>
                                         <button type="button" @click="deleteUnitEvaluation(evaluationIdx, evaluation.month, evaluation.year)"
-                                            class="btn btn-info btn-sm" :disabled="deletingUnitEvaluation">
+                                            class="btn btn-info ml-2" :disabled="deletingUnitEvaluation">
                                             {{ deletingUnitEvaluation ? 'Deleting' : 'Yes, delete' }}
                                         </button>
                                         <button type="button" 
-                                            class="btn btn-light btn-sm"
+                                            class="btn btn-light"
                                             v-on:click="toggleDeleteEvaluationModal = false">Cancel
                                         </button>
                                     </div>

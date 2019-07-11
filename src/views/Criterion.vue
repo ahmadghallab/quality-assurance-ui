@@ -35,11 +35,6 @@
               v-on:click="editCriterionModal(criterion.id)">
               {{ criterion.name }}
             </a>
-            <ul class="nested-ul" v-if="criterion.suggested_solution">
-              <li class="mt-2 text-muted">
-                {{ criterion.suggested_solution }}
-              </li>
-            </ul>
             <Modal v-if="toggleEditCriterionModal && selectedCriterion == criterion.id ">
               <div slot="body">
                 <form v-on:submit.prevent="editCriterion(criterion.id, departmentIdx, criterionIdx)">
@@ -50,15 +45,6 @@
                       v-model="criterion.name" 
                       class="form-control"  
                       placeholder="+ المعيار">
-                  </div>
-                  <div class="form-group">
-                    <textarea
-                      id="suggSolution"
-                      autocomplete="off"
-                      class="form-control"  
-                      v-model="criterion.suggested_solution" 
-                      placeholder="+ الحل المقترح">
-                    </textarea>
                   </div>
                   <button type="submit" 
                     class="btn btn-info ml-2"
@@ -85,7 +71,7 @@
         </ul>
       </li>
       <div class="row">
-        <div class="col-8 col-sm-6 col-md-4">
+        <div class="col-12 col-sm-8">
           <div class="form-group">
             <input type="text" class="form-control"
               autocomplete="off"
@@ -144,8 +130,7 @@ export default {
     editCriterion(criterionId, departmentIdx, criterionIdx) {
       appService.editCriterion({
         id: criterionId,
-        name: this.departments[departmentIdx].criteria[criterionIdx].name,
-        suggested_solution: this.departments[departmentIdx].criteria[criterionIdx].suggested_solution,
+        name: this.departments[departmentIdx].criteria[criterionIdx].name
       })
       .then((data) => {
         this.toggleEditCriterionModal = false

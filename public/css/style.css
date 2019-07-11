@@ -36,7 +36,7 @@ label {
   cursor: pointer;
 }
 .wrapper {
-  margin: 70px auto 25px;
+  margin: 70px auto 50px;
 }
 .bootstrap-nav {
   margin: 0 auto;
@@ -129,7 +129,7 @@ a:hover, a:focus, a:active {
 }
 @media only print {
   body {
-    font-size: 20px !important;
+    font-size: 18px !important;
   } 
   nav, form, .btn, .screen-only, .alert  {
     display: none;
