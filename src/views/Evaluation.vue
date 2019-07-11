@@ -2,9 +2,59 @@
     <div>
         <Loader v-if="editUnitEvaluationLoader" />
         <div v-else>
+            <div class="default-card">
+                <p class="highlight font-weight-bold mb-3">بيانات المنشئة الصحية</p>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>الادارة الصحية</td>
+                            <td class="font-weight-bold">{{ unit.management__name }}</td>
+                            <td>الوحدة الصحية</td>
+                            <td class="font-weight-bold">{{ unit.name }}</td>
+                        </tr>
+                        <tr>
+                            <td>تقرير شهر</td>
+                            <td class="font-weight-bold">{{ month + '-' + year }}</td>
+                            <td>نتيجة التقرير</td>
+                            <td class="font-weight-bold">{{ ((evaluationsChecked.length/evaluations.length) * 100).toFixed(2) }} %</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="highlight font-weight-bold mb-3">تقرير نتيجة التقييم</p>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>البند</th>
+                            <th>الاجمالي</th>
+                            <th>مستوفي</th>
+                            <th>غير مستوفي</th>
+                            <th>النسبة %</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(department, departmentIdx) in departments" v-bind:key="departmentIdx">
+                            <td class="font-weight-bold">{{ department.department__name }}</td>
+                            <td>{{ filteredEvaluations(department.department__id).length }}</td>
+                            <td>
+                                <span class="highlight success-highlight ml-2">
+                                    {{ filteredEvaluationsChecked(department.department__id) }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="highlight light-highlight ml-2">
+                                    {{ filteredEvaluationsNotChecked(department.department__id) }}
+                                </span>
+                            </td>
+                            <td>
+                                {{ ((filteredEvaluationsChecked(department.department__id) / filteredEvaluations(department.department__id).length) * 100).toFixed(2) }} %
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <div class="card__header">
                 <div class="mb-1" v-for="(department, departmentIdx) in departments" v-bind:key="departmentIdx">
-                    <p class="font-weight-bold my-2">{{ department.department__name }}</p>
+                    <p class="font-weight-bold mb-3">{{ department.department__name }}</p>
                     <ul class="nested-ul">
                         <li class="mb-2" 
                             v-for="(evaluation, evaluationIdx) in filteredEvaluations(department.department__id)" 
@@ -17,20 +67,6 @@
                                 <span v-else>-</span>
                                 {{ evaluation.criterion__name }}
                             </a>
-                            <!-- <div class="row">
-                                <div class="col-auto pl-0">
-                                    <span v-if="evaluation.checked" class="ml-2">+</span>
-                                    <span class="ml-2" v-else>-</span>
-                                </div>
-                                <div class="col pr-0">
-                                    <a href="javascript:void(0)" 
-                                        class="highlight"
-                                        v-bind:class="[evaluation.checked ? 'success-highlight' : 'light-highlight']"
-                                        v-on:click="check(evaluation)">
-                                        {{ evaluation.criterion__name }}
-                                    </a>
-                                </div>
-                            </div> -->
                             <ul class="nested-ul" v-if="!evaluation.checked">
                                 <li class="mt-2">
                                     {{ evaluation.criterion__suggested_solution }}
@@ -40,76 +76,13 @@
                     </ul>
                 </div>
             </div>
-            <div class="card__footer light">
-                <button type="button" class="btn btn-info"
+            <div class="card__footer light-bg border-top screen-only">
+                <button type="button" class="btn btn-info ml-2"
                     v-on:click="saveUnitEvaluation()" :disabled="savingUnitEvaluation || !checkedCriteria.length">
                     {{ savingUnitEvaluation ? 'يتم الحفظ' : 'حفظ التعديلات' }}
                 </button>
+                <button type="button" class="btn btn-light bg-white" v-on:click="print()">طباعة</button>
             </div> 
-            <!-- <div class="default-card">
-                <p class="font-weight-bold mb-3">السلبيات والحل المقترح</p>
-                <ul class="pr-0">
-                    <li class="my-2" v-for="(evaluation, evaluationNotCheckedIdx) in evaluationsNotChecked" v-bind:key="evaluationNotCheckedIdx">
-                        <p class="highlight font-weight-bold my-2">
-                            {{ evaluation.criterion__name }}
-                        </p>
-                        <ul class="nested-ul">
-                            <li class="mb-2">
-                                <span class="highlight success-highlight">
-                                    الحل المقترح
-                                </span>
-                            </li>
-                            <li class="mb-1">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control"
-                                            autocomplete="off"
-                                            placeholder="+ ملاحظـــات">
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div> -->
-            <div class="default-card">
-                <p class="highlight font-weight-bold mb-3">الملخص</p>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>البند</th>
-                            <th>ايجابي</th>
-                            <th>سلبي</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(department, departmentIdx) in departments" v-bind:key="departmentIdx">
-                            <td class="font-weight-bold">{{ department.department__name }}</td>
-                            <td>
-                                <span class="highlight light-highlight ml-2">
-                                    {{ filteredEvaluationsChecked(department.department__id) }}
-                                </span>
-                                <span class="highlight success-highlight">
-                                    {{ ((filteredEvaluationsChecked(department.department__id) / evaluations.length) * 100).toFixed(1) }}%
-                                </span>
-                            </td>
-                            <td>
-                                <span class="highlight light-highlight ml-2">
-                                    {{ filteredEvaluationsNotChecked(department.department__id) }}
-                                </span>
-                                <span class="highlight danger-highlight">
-                                {{ ((filteredEvaluationsNotChecked(department.department__id) / evaluations.length) * 100).toFixed(1) }}%
-                                </span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div>
-                <button type="button" class="btn btn-light" v-on:click="print()">طباعة</button>
-            </div>
         </div>
     </div>
 </template>
@@ -130,7 +103,8 @@ export default {
             savingUnitEvaluation: false,
             checkedCriteria: [],
             departments: [],
-            evaluations: []
+            evaluations: [],
+            unit: {}
         }
     },
     computed: {
@@ -144,8 +118,8 @@ export default {
         filteredEvaluationsNotChecked () {
             return (departmentId) => this.filteredEvaluations(departmentId).length - this.filteredEvaluationsChecked(departmentId)
         },
-        evaluationsNotChecked () {
-            return this.evaluations.filter(evaluation => evaluation.checked == false)
+        evaluationsChecked () {
+            return this.evaluations.filter(evaluation => evaluation.checked)
         },
         highlight () {
             return (evaluationId) => this.checkedCriteria.includes(evaluationId) 
@@ -174,6 +148,7 @@ export default {
             }).then(data => {
                 this.departments = data.departments
                 this.evaluations = data.evaluations
+                this.unit = data.unit
                 this.editUnitEvaluationLoader = false
             })
         },

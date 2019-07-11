@@ -83,8 +83,11 @@ a:hover, a:focus, a:active {
   background-color: rgb(68, 138, 255);
   color: #fff;
 }
-.light {
-  background-color: #f4f7f9;
+.border-top, .border-bottom {
+  border-color: #e6ecf0 !important;
+}
+.light-bg {
+  background-color: #f5f8fa !important;
 }
 .light-highlight, .light-highlight:hover, .light-highlight:focus {
   background: #abb8c2;
@@ -128,7 +131,7 @@ a:hover, a:focus, a:active {
   body {
     font-size: 20px !important;
   } 
-  nav, form, .btn, .screen_only, .alert  {
+  nav, form, .btn, .screen-only, .alert  {
     display: none;
   }
   a {
@@ -138,16 +141,22 @@ a:hover, a:focus, a:active {
     color: #000 !important;
     padding: 0;
   }
-  .bordered {
-    border: 1px solid #000;
-    border-style: dotted;
-    border-radius: 0;
-    padding: 2px 5px;
-  }
   .wrapper {
     width: 100%;
     max-width: 100%;
     margin: 0;
   }
-  
+  .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+    border: 1px solid #000000 !important;
+    vertical-align: middle;
+  }
+  .table>thead>tr>th {
+    border-bottom: 2px solid #000000 !important;
+  }
+  .nested-ul {
+    border-color: #000;
+  }
+  .default-card, .card__footer {
+    margin-bottom: 0;
+  }
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="default-card">
     <Loader v-if="listDepartmentsLoader" />
-    <ul class="list-unstyled" v-else>
+    <ul class="list-unstyled pr-0" v-else>
       <li class="mb-1" v-for="(department, departmentIdx) in departments" v-bind:key="departmentIdx">
         <a href="javascript:void(0)"
           v-on:click="editDepartmentModal(department.id)" 

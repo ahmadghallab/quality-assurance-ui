@@ -6,16 +6,16 @@
             <ul class="list-inline mb-0 pr-0">
                 <li class="list-inline-item">
                     <router-link class="font-weight-bold nav-link" :to="{name: 'home'}">
-                        مرحبا
+                        الرئيسية
                     </router-link>
                 </li>
                 <li class="list-inline-item">
-                    <router-link class="font-weight-bold nav-link" :to="{name: 'home'}">
+                    <router-link class="font-weight-bold nav-link" :to="{name: 'management'}">
                         الادارات
                     </router-link>
                 </li>
                 <li class="list-inline-item">
-                    <router-link class="font-weight-bold nav-link" :to="{name: 'department'}">
+                    <router-link class="font-weight-bold nav-link" :to="{name: 'criterion'}">
                         المعايير
                     </router-link>
                 </li>

@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home'
-import Department from './views/Department'
+import Management from './views/Management'
+import Criterion from './views/Criterion'
 import Unit from './views/Unit'
 import Evaluation from './views/Evaluation'
 
@@ -17,9 +18,14 @@ export default new Router({
       component: Home
     },
     {
-      path: '/department',
-      name: 'department',
-      component: Department
+      path: '/management',
+      name: 'management',
+      component: Management
+    },
+    {
+      path: '/criterion',
+      name: 'criterion',
+      component: Criterion
     },
     {
       path: '/unit/:id',
