@@ -47,10 +47,10 @@
                       placeholder="+ المعيار">
                   </div>
                   <button type="submit" 
-                    class="btn btn-info ml-2"
+                    class="btn btn-info btn-sm ml-2"
                     v-on:click="toggleEditCriterionModal = false">حفظ</button>
                   <button type="button" 
-                    class="btn btn-light"
+                    class="btn btn-light btn-sm"
                     v-on:click="toggleEditCriterionModal = false">الغاء</button>
                 </form>
               </div>

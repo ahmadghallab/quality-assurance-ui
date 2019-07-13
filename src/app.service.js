@@ -150,7 +150,7 @@ const appService = {
   },
   displayUnitEvaluation (mode, data) {
     let department = ''
-    if (mode == 'retrieve') {
+    if (mode == 'get') {
       department = '&department=' + data.department
     }
     return new Promise((resolve, reject) => {
