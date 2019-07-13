@@ -148,9 +148,13 @@ const appService = {
         .then(() => resolve()).catch(response => { reject(response.status) })
     })
   },
-  editUnitEvaluation (data) {
+  displayUnitEvaluation (mode, data) {
+    let department = ''
+    if (mode == 'retrieve') {
+      department = '&department=' + data.department
+    }
     return new Promise((resolve, reject) => {
-      axios.get(`/unit/${data.unitId}/evaluation?month=${data.month}&year=${data.year}`)
+      axios.get(`/unit/${data.unitId}/evaluation/display?month=${data.month}&year=${data.year}&mode=${mode}${department}`)
         .then(response => {
           resolve(response.data)
         }).catch(response => {

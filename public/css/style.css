@@ -4,11 +4,24 @@ body {
 body, .btn {
   font-size: 14px !important;
 }
+.circle {
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid transparent;
+  width: 30px;
+  height: 30px;
+}
 .nav-link {
   color: rgba(255,255,255,0.8);
 }
 .router-link-exact-active, .nav-link:hover, .nav-link:focus {
   color: rgba(255,255,255,1);
+}
+.check-icon {
+  width:15px;
+  fill:#fff;
 }
 .default-card, .card__header, .card__body, .card__footer {
   background-color: #ffffff;
@@ -83,10 +96,10 @@ a:hover, a:focus, a:active {
   background-color: rgb(68, 138, 255);
   color: #fff;
 }
-.border-top, .border-bottom {
-  border-color: #e6ecf0 !important;
+.border-top, .border-bottom, .table td, .table th, .table .thead-light th {
+  border-color: #e6ecf0;
 }
-.light-bg {
+.light-bg, .table .thead-light th {
   background-color: #f5f8fa !important;
 }
 .light-highlight, .light-highlight:hover, .light-highlight:focus {
@@ -146,7 +159,7 @@ a:hover, a:focus, a:active {
     max-width: 100%;
     margin: 0;
   }
-  .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+  .table>tbody>tr>td, .table>tbody>tr>th, .table>thead>tr>td, .table>thead>tr>th {
     border: 1px solid #000000 !important;
     vertical-align: middle;
   }
@@ -158,5 +171,9 @@ a:hover, a:focus, a:active {
   }
   .default-card, .card__footer {
     margin-bottom: 0;
+  }
+  .check-icon {
+    width: 20px;
+    fill:#000;
   }
 }
