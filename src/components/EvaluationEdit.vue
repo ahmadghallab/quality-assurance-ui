@@ -12,6 +12,23 @@
                 <Loader v-if="selectedDepartment == department.department__id && getDepartmentEvaluationLoader" />
                 <ul class="nested-ul" v-else-if="selectedDepartment == department.department__id">
                     <li class="my-2" v-for="(evaluation, evaluationIdx) in evaluations" v-bind:key="evaluationIdx">
+                        <!-- <a href="javascript:void(0)" class="font-weight-bold"
+                            v-on:click="action(evaluation.id)">
+                            {{ evaluation.criterion__name }}
+                        </a>
+                        <ul class="nested-ul" v-if="selectedEvaluation == evaluation.id">
+                            <li class="my-3">
+                                <div class="row">
+                                    <div class="col-auto align-self-center">
+                                        <span class="highlight success-highlight ml-2">مستوفي</span>
+                                        <span class="highlight light-highlight ml-2">ليس متاح</span>
+                                    </div>
+                                    <div class="col-auto">
+                                        <input type="text" class="form-control" placeholder="ملاحظـــات">
+                                    </div>
+                                </div>
+                            </li>
+                        </ul> -->
                         <div class="row">
                             <div class="col-auto align-self-center pl-0">
                                 <span v-if="evaluation.checked">+</span>
@@ -22,6 +39,7 @@
                                     v-on:click="check(evaluationIdx, evaluation.id)">
                                     {{ evaluation.criterion__name }}
                                 </a>
+                                
                             </div>
                         </div>
                     </li>
@@ -65,6 +83,13 @@ export default {
         }
     },
     methods: {
+        action (evaluationId) {
+            if (evaluationId == this.selectedEvaluation) {
+                this.selectedEvaluation = null
+            } else {
+                this.selectedEvaluation = evaluationId
+            }
+        },
         check (evaluationIdx, evaluationId) {
             this.evaluations[evaluationIdx].checked = !this.evaluations[evaluationIdx].checked
             if (this.checkedCriteria.includes(evaluationId)) {

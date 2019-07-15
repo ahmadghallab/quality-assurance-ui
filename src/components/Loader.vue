@@ -13,7 +13,7 @@
   }
 }
 .circle-spinner {
-  margin: 50px auto;
+  margin: 25px;
   width: 25px;
   height: 25px;
   border-radius: 50%;

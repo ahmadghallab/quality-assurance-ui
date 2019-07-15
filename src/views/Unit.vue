@@ -1,79 +1,92 @@
 <template>  
-    <div class="default-card">
+    <div>
         <Loader v-if="retrieveUnitLoader" />
         <div v-else>
-            <h6 class="font-weight-bold mb-3">{{ unitName }}</h6>
-            <Loader v-if="listUnitEvaluationLoader" />
-            <div v-else>
-                <ul class="pr-0">
-                    <li class="mb-2" v-for="(evaluation, evaluationIdx) in unitEvaluations" v-bind:key="evaluationIdx">
-                        <div class="btn-group">
+            <div class="card__header">
+                <h6 class="font-weight-bold mb-3">{{ unitName }}</h6>
+                <Loader v-if="listUnitEvaluationLoader" />
+                <div v-else>
+                    <ul class="pr-0 mb-0">
+                        <li class="mb-2" v-for="(evaluation, evaluationIdx) in unitEvaluations" v-bind:key="evaluationIdx">
                             <a href="javascript:void(0)"
                                 class="font-weight-bold"
                                 v-bind:class="{'highlight light-highlight': selectedEvaluation == evaluationIdx}" 
-                                v-on:click="toggleUnitEvaluationList(evaluationIdx)">
+                                v-on:click="toggleEvaluationList(evaluationIdx)">
                                 {{ evaluation.month + '.' + evaluation.year }}
                             </a>
-                            <!-- <div class="dropdown-menu text-right"
-                                v-bind:class="[selectedEvaluation == evaluationIdx ? 'show' : '']">
-                                <router-link 
+                            <EvaluationEdit
+                                v-if="toggleEvaluation && selectedEvaluation == evaluationIdx" 
+                                v-bind:unitId="unitId" 
+                                v-bind:month="evaluation.month"
+                                v-bind:year="evaluation.year" 
+                            />
+                            <Modal width="800px" v-if="toggleEvaluationReportModal && selectedEvaluation == evaluationIdx">
+                                <div slot="body">
+                                    <EvaluationReport
+                                        v-bind:unitId="unitId" 
+                                        v-bind:month="evaluation.month"
+                                        v-bind:year="evaluation.year" 
+                                        @close="toggleEvaluationReportModal = false"
+                                    />
+                                </div>
+                            </Modal>
+                            <Modal width="500px" v-if="toggleDeleteEvaluationModal && selectedEvaluation == evaluationIdx">
+                                <div slot="body" class="text-left">
+                                    <div class="card__header">
+                                        <p class="text-muted">
+                                        You are about to delete <span class="highlight info-highlight">{{ evaluation.month + '.' + evaluation.year }}</span> evaluation. No one will be able to access this evaluation ever again
+                                        </p>
+                                        <p class="font-weight-bold mt-4 mb-0">Are you absolutely positive? There's no undo</p>
+                                    </div>
+                                    <div class="card__footer light-bg border-top">
+                                        <button type="button" @click="deleteUnitEvaluation(evaluationIdx, evaluation.month, evaluation.year)"
+                                            class="btn btn-info btn-sm ml-2" :disabled="deletingUnitEvaluation">
+                                            {{ deletingUnitEvaluation ? 'Deleting' : 'Yes, delete' }}
+                                        </button>
+                                        <button type="button" 
+                                            class="btn btn-light btn-sm bg-white"
+                                            v-on:click="toggleDeleteEvaluationModal = false">Cancel
+                                        </button>
+                                    </div>
+                                </div>
+                            </Modal>
+                            <div v-if="selectedEvaluation == evaluationIdx">
+                                <!-- <router-link 
                                 :to="{ 
-                                    name: 'evaluation', 
+                                    name: 'evaluationReport', 
                                     params: {id: unitId}, 
                                     query: {month: evaluation.month, year: evaluation.year}
-                                }" class="dropdown-item" >تعديل</router-link>
-                                <a class="dropdown-item" href="javascript:void(0)">تحديث</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item text-danger" 
-                                    href="javascript:void(0)"
+                                }">طباعة تقرير</router-link> -->
+                                <button type="button" class="btn btn-light btn-sm"
+                                    v-on:click="toggleEvaluationReportModal = true">عرض تقرير
+                                </button>
+                                <button type="button" class="btn btn-light btn-sm mx-2">تزامن
+                                </button>
+                                <button type="button" class="btn btn-light btn-sm"
                                     v-on:click="toggleDeleteEvaluationModal = true">حذف
-                                </a>
-                            </div> -->
+                                </button>
+                            </div>
+                        </li>
+                        <p class="text-muted" v-if="!unitEvaluations.length">لا يوجد تقييمات حتي الان</p>    
+                    </ul>
+                </div>
+            </div>
+            <div class="card__footer light-bg border-top">
+                <form v-on:submit.prevent="createUnitEvaluation()">
+                    <div class="form-row">
+                        <div class="col-2">
+                            <input type="number" v-model="month" class="form-control" placeholder="شهر">
                         </div>
-                        <UnitEvaluation
-                            v-if="toggleUnitEvaluation && selectedEvaluation == evaluationIdx" 
-                            v-bind:unitId="unitId" 
-                            v-bind:month="evaluation.month"
-                            v-bind:year="evaluation.year" 
-                        />
-                        <Modal width="450px" v-if="toggleDeleteEvaluationModal && selectedEvaluation == evaluationIdx">
-                            <div slot="body" class="text-left">
-                                <p class="text-muted">
-                                You are about to delete <span class="highlight info-highlight">{{ evaluation.month + '.' + evaluation.year }}</span> evaluation. No one will be able to access this evaluation ever again
-                                </p>
-                                <p class="font-weight-bold my-4">Are you absolutely positive? There's no undo</p>
-                                <div>
-                                    <button type="button" @click="deleteUnitEvaluation(evaluationIdx, evaluation.month, evaluation.year)"
-                                        class="btn btn-info ml-2" :disabled="deletingUnitEvaluation">
-                                        {{ deletingUnitEvaluation ? 'Deleting' : 'Yes, delete' }}
-                                    </button>
-                                    <button type="button" 
-                                        class="btn btn-light"
-                                        v-on:click="toggleDeleteEvaluationModal = false">Cancel
-                                    </button>
-                                </div>
-                            </div>
-                        </Modal>
-                    </li>
-                    <p class="text-muted" v-if="!unitEvaluations.length">لا يوجد تقييمات حتي الان</p>
-                    <div>
-                        <form v-on:submit.prevent="createUnitEvaluation()">
-                            <div class="form-row">
-                                <div class="col-2">
-                                    <input type="number" v-model="month" class="form-control" placeholder="شهر">
-                                </div>
-                                <div class="col-2">
-                                    <input type="number" v-model="year" class="form-control" placeholder="سنة">
-                                </div>
-                                <div class="col-auto">
-                                    <button type="submit" class="btn btn-light btn-sm" :disabled="createUnitEvalValidator">
-                                        {{ creatingUnitEvaluation ? 'رجاء الانتظار' : 'إنشاء' }}
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
+                        <div class="col-2">
+                            <input type="number" v-model="year" class="form-control" placeholder="سنة">
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-light btn-sm bg-white" :disabled="createUnitEvalValidator">
+                                {{ creatingUnitEvaluation ? 'رجاء الانتظار' : 'إنشاء' }}
+                            </button>
+                        </div>
                     </div>
-                </ul>
+                </form>
             </div>
         </div>
     </div>
@@ -82,18 +95,21 @@
 import appService from '../app.service.js'
 import Modal from '../components/Modal'
 import Loader from '../components/Loader'
-import UnitEvaluation from '../components/UnitEvaluation'
+import EvaluationEdit from '../components/EvaluationEdit'
+import EvaluationReport from '../components/EvaluationReport'
 
 export default {
     components: {
         Modal,
         Loader,
-        UnitEvaluation
+        EvaluationEdit,
+        EvaluationReport
     },
     data () {
         return {
             toggleDeleteEvaluationModal: false,
-            toggleUnitEvaluation: false,
+            toggleEvaluationReportModal: false,
+            toggleEvaluation: false,
             deletingUnitEvaluation: false,
             creatingUnitEvaluation: false,
             retrieveUnitLoader: true,
@@ -119,13 +135,13 @@ export default {
                 this.selectedEvaluation = evaluationIdx
             }
         },
-        toggleUnitEvaluationList(evaluationIdx) {
+        toggleEvaluationList(evaluationIdx) {
             if (evaluationIdx == this.selectedEvaluation) {
                 this.selectedEvaluation = null
-                this.toggleUnitEvaluation = false
+                this.toggleEvaluation = false
             } else {
                 this.selectedEvaluation = evaluationIdx
-                this.toggleUnitEvaluation = true
+                this.toggleEvaluation = true
             }
         },
         retrieveUnit () {

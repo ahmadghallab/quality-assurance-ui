@@ -93,12 +93,8 @@ a:hover, a:focus, a:active {
   padding: 2px 7px;
   border-radius: 4px;
 }
-.primary-highlight, .primary-highlight:hover, .primary-highlight:focus {
-  background-color: rgb(68, 138, 255);
-  color: #fff;
-}
 .border-top, .border-bottom, .table td, .table th, .table .thead-light th {
-  border-color: #e6ecf0;
+  border-color: #e6ecf0 !important;
 }
 .light-bg, .table .thead-light th {
   background-color: #f5f8fa !important;
@@ -155,17 +151,14 @@ a:hover, a:focus, a:active {
     color: #000 !important;
     padding: 0;
   }
-  .wrapper {
-    width: 100%;
-    max-width: 100%;
-    margin: 0;
+  .wrapper, .dialog-wrapper[data-v-701ac82d] {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
   }
   .table>tbody>tr>td, .table>tbody>tr>th, .table>thead>tr>td, .table>thead>tr>th {
-    border: 1px solid #000000 !important;
+    border-color: #000000 !important;
     vertical-align: middle;
-  }
-  .table>thead>tr>th {
-    border-bottom: 2px solid #000000 !important;
   }
   .nested-ul {
     border-color: #000;

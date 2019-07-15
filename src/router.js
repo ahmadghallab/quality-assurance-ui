@@ -4,7 +4,6 @@ import Home from './views/Home'
 import Management from './views/Management'
 import Criterion from './views/Criterion'
 import Unit from './views/Unit'
-import EvaluationReport from './views/EvaluationReport'
 
 Vue.use(Router)
 
@@ -31,11 +30,6 @@ export default new Router({
       path: '/unit/:id',
       name: 'unit',
       component: Unit
-    },
-    {
-      path: '/unit/:id/evaluation',
-      name: 'evaluationReport',
-      component: EvaluationReport
     }
   ]
 })

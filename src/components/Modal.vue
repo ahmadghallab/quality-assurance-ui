@@ -2,19 +2,8 @@
 <transition name="dialog">
   <div class="dialog-mask">
     <div class="dialog-wrapper" v-bind:style="{ 'max-width': width}">
-      <div class="dialog-container fade-up">
-        <!-- Header -->
-        <div class="dialog-header">
-          <slot name="header"></slot>
-        </div>
-        <!-- Body -->
-        <div class="dialog-body">
-          <slot name="body"></slot>
-        </div>
-        <!-- Footer -->
-        <div class="dialog-footer">
-          <slot name="footer"></slot>
-        </div>
+      <div class="dialog-container">
+        <slot name="body"></slot>
       </div>
     </div>
   </div>
@@ -47,9 +36,6 @@ export default {
   margin: 3rem auto;
   pointer-events: none;
   width: 80%;
-  border-radius: 4px;
-  padding: 25px;
-  background-color: #fff;
 }
 .dialog-container {
   position: relative;
@@ -59,8 +45,27 @@ export default {
 .mask, .dialog-leave-active {
   transition: all .3s ease;
 }
-.dialog-leave-to {
+
+.dialog-enter, .dialog-leave-to {
   transform: translateY(5px);
   opacity: 0;
 }
+@media print {
+  .dialog-mask {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: 0;
+    padding: 0;
+    visibility: visible;
+    /**Remove scrollbar for printing.**/
+    overflow: visible !important;
+  }
+  .dialog-wrapper {
+    visibility: visible !important;
+    /**Remove scrollbar for printing.**/
+    overflow: visible !important;
+  }
+}
+
 </style>
