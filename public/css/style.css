@@ -1,6 +1,12 @@
 body {
-  background-color: #e6ecf0;
+  direction: rtl;
+  color: #031b4e;
+  font-family: Consolas,"Liberation Mono",Menlo,Courier,monospace;
+  text-align: right;
   font-size: 14px !important;
+}
+.side-nav {
+  min-height: 100vh;
 }
 .circle {
   border-radius: 50%;
@@ -8,34 +14,33 @@ body {
   align-items: center;
   justify-content: center;
   border: 3px solid transparent;
-  width: 30px;
-  height: 30px;
 }
-.nav-link {
-  color: rgba(255,255,255,0.8);
+.circle-md {
+  width: 25px;
+  height: 25px;
 }
-.router-link-exact-active, .nav-link:hover, .nav-link:focus {
-  color: rgba(255,255,255,1);
+.circle-lg {
+  width: 40px;
+  height: 40px;
+}
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: block;
 }
 .check-icon {
-  width:15px;
-  fill:#fff;
+  width: 12.5px;
+  fill: #fff;
 }
-.default-card, .card__header, .card__body, .card__footer {
-  background-color: #ffffff;
-  padding: 20px;
-  line-height: 1.375em;
+.nav-icon {
+  width: 20px;
+  fill: #031b4e;
 }
 .default-card {
-  border-radius: 7px;
   margin-bottom: 20px;
-}
-.card__header {
-  border-radius: 7px 7px 0 0;
-}
-.card__footer {
-  border-radius: 0 0 7px 7px;
-  margin-bottom: 20px;
+  padding: 20px;
+  line-height: 1.375em;
 }
 ul {
   list-style: none;
@@ -43,32 +48,20 @@ ul {
 .nested-ul {
   border-right: 1px solid #e6ecf0;
 }
-label {
+label, .clickable {
   cursor: pointer;
 }
 .wrapper {
-  margin: 70px auto 50px;
-}
-.bootstrap-nav {
   margin: 0 auto;
-  height: 45px;
-}
-.wrapper, .bootstrap-nav {
-  font-family: Consolas,"Liberation Mono",Menlo,Courier,monospace;
-  direction: rtl;
-  text-align: right;
-  width: 85%;
-  max-width: 950px;
+  width: 80%;
+  max-width: 900px;
 }
 a {
-  color: #585858; 
+  color: #031b4e; 
 }
 a:hover, a:focus, a:active {
   color: inherit;
   text-decoration-style: dotted;
-}
-.customNav {
-  box-shadow: 0 0.5rem 1rem rgba(0,0,0,.05);
 }
 .dropdown-menu {
   right: 0 !important;
@@ -83,7 +76,7 @@ a:hover, a:focus, a:active {
   font-size: 13px !important;
 }
 .form-control:focus {
-  border-color: #17a2b8 !important;
+  border-color: #007bff !important;
 }
 .form-control:disabled, .form-control[readonly] {
   background-color: #e6ecf0;
@@ -93,15 +86,11 @@ a:hover, a:focus, a:active {
   padding: 2px 7px;
   border-radius: 4px;
 }
-.border-top, .border-bottom, .table td, .table th, .table .thead-light th {
+.border-top, .border-bottom, .border-left, .table td, .table th, .table .thead-light th {
   border-color: #e6ecf0 !important;
 }
-.light-bg, .table .thead-light th {
-  background-color: #f5f8fa !important;
-}
 .light-highlight, .light-highlight:hover, .light-highlight:focus {
-  background: #abb8c2;
-  color: #fff;
+  background: #f3f6f9;
 }
 .info-highlight, .info-highlight:hover, .info-highlight:focus {
   background: #17a2b8;
@@ -114,6 +103,9 @@ a:hover, a:focus, a:active {
 .danger-highlight, .danger-highlight:hover, .danger-highlight:focus {
   background: #e81c4f;
   color: #fff;
+}
+.router-link-exact-active, .primary-highlight, .primary-highlight:hover, .primary-highlight:focus {
+  background-color: #f1f8ff !important;
 }
 .alert {
   padding: 15px 20px;
@@ -163,7 +155,7 @@ a:hover, a:focus, a:active {
   .nested-ul {
     border-color: #000;
   }
-  .default-card, .card__footer {
+  .default-card {
     margin-bottom: 0;
   }
   .check-icon {

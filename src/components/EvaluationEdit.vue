@@ -12,41 +12,45 @@
                 <Loader v-if="selectedDepartment == department.department__id && getDepartmentEvaluationLoader" />
                 <ul class="nested-ul" v-else-if="selectedDepartment == department.department__id">
                     <li class="my-2" v-for="(evaluation, evaluationIdx) in evaluations" v-bind:key="evaluationIdx">
-                        <!-- <a href="javascript:void(0)" class="font-weight-bold"
-                            v-on:click="action(evaluation.id)">
-                            {{ evaluation.criterion__name }}
-                        </a>
-                        <ul class="nested-ul" v-if="selectedEvaluation == evaluation.id">
-                            <li class="my-3">
-                                <div class="row">
-                                    <div class="col-auto align-self-center">
-                                        <span class="highlight success-highlight ml-2">مستوفي</span>
-                                        <span class="highlight light-highlight ml-2">ليس متاح</span>
-                                    </div>
-                                    <div class="col-auto">
-                                        <input type="text" class="form-control" placeholder="ملاحظـــات">
-                                    </div>
-                                </div>
-                            </li>
-                        </ul> -->
                         <div class="row">
                             <div class="col-auto align-self-center pl-0">
-                                <span v-if="evaluation.checked">+</span>
-                                <span v-else>-</span>
+                                <span class="dot" v-bind:class="{
+                                    'primary-highlight': evaluation.checked,
+                                    'light-highlight': !evaluation.checked
+                                }"></span>
                             </div>
-                            <div class="col">
-                                <a href="javascript:void(0)" class="font-weight-bold"
-                                    v-on:click="check(evaluationIdx, evaluation.id)">
+                            <div class="col align-self-center">
+                                <a href="javascript:void(0)" class="font-weight-bold highlight"
+                                    v-on:click="select(evaluationIdx, evaluation.id)"
+                                    v-bind:class="{'primary-highlight': selected(evaluation.id)}">
                                     {{ evaluation.criterion__name }}
                                 </a>
                                 
                             </div>
                         </div>
                     </li>
-                    <div class="form-group">
-                        <button type="button" class="btn btn-light btn-sm"
-                            v-on:click="saveUnitEvaluation()" :disabled="savingUnitEvaluation || !checkedCriteria.length">
-                            {{ savingUnitEvaluation ? 'يتم الحفظ' : 'حفظ التعديلات' }}
+                    <div class="form-group mt-3">
+                        <button type="button" class="btn btn-sm ml-2"
+                            v-bind:class="[allSelected ? 'btn-secondary' : 'btn-light']" 
+                            @click="selectAll()">تحديد
+                        </button>
+                        <button type="button" class="btn btn-light btn-sm ml-1"
+                            v-on:click="saveUnitEvaluation()" :disabled="savingUnitEvaluation || !selectedCriteria.length">مستوفي
+                        </button>
+                        <button type="button" class="btn btn-light btn-sm ml-1"
+                            v-on:click="saveUnitEvaluation()" :disabled="savingUnitEvaluation || !selectedCriteria.length">غير مستوفي
+                        </button>
+                         <button type="button" class="btn btn-light btn-sm ml-2"
+                            v-on:click="saveUnitEvaluation()" :disabled="savingUnitEvaluation || !selectedCriteria.length">اخري
+                        </button>
+                        <button type="button" class="btn btn-light btn-sm ml-1"
+                            v-on:click="saveUnitEvaluation()" :disabled="savingUnitEvaluation || !selectedCriteria.length">متاح
+                        </button>
+                        <button type="button" class="btn btn-light btn-sm ml-2"
+                            v-on:click="saveUnitEvaluation()" :disabled="savingUnitEvaluation || !selectedCriteria.length">غير متاح
+                        </button>
+                        <button type="button" class="btn btn-light btn-sm mr-1"
+                            v-on:click="saveUnitEvaluation()" :disabled="savingUnitEvaluation || !selectedCriteria.length">نص
                         </button>
                     </div>
                 </ul>
@@ -77,26 +81,38 @@ export default {
             toggleEditEvaluationModal: false,
             selectedEvaluation: null,
             selectedDepartment: null,
-            checkedCriteria: [],
+            selectedCriteria: [],
             departments: [],
             evaluations: []
         }
     },
+    computed: {
+        allSelected () {
+            return this.selectedCriteria.length == this.evaluations.length
+        },
+        selected () {
+        return criterion => this.selectedCriteria.includes(criterion)
+        }
+    },
     methods: {
-        action (evaluationId) {
-            if (evaluationId == this.selectedEvaluation) {
-                this.selectedEvaluation = null
+        select (evaluationIdx, evaluationId) {
+            // this.evaluations[evaluationIdx].selected = !this.evaluations[evaluationIdx].selected
+            if (this.selectedCriteria.includes(evaluationId)) {
+                let arrIndx = this.selectedCriteria.indexOf(evaluationId)
+                this.selectedCriteria.splice(arrIndx, 1)
             } else {
-                this.selectedEvaluation = evaluationId
+                this.selectedCriteria.push(evaluationId)
             }
         },
-        check (evaluationIdx, evaluationId) {
-            this.evaluations[evaluationIdx].checked = !this.evaluations[evaluationIdx].checked
-            if (this.checkedCriteria.includes(evaluationId)) {
-                let arrIndx = this.checkedCriteria.indexOf(evaluationId)
-                this.checkedCriteria.splice(arrIndx, 1)
+        selectAll() {
+            if (this.allSelected) {
+                this.selectedCriteria = []
             } else {
-                this.checkedCriteria.push(evaluationId)
+                for (let evaluation of this.evaluations) {
+                    if (!this.selectedCriteria.includes(evaluation.id)) {
+                        this.selectedCriteria.push(evaluation.id)
+                    }
+                }
             }
         },
         editEvaluationModal(evaluationId) {
@@ -116,7 +132,7 @@ export default {
         getUnitEvaluation(departmentId) {
             if (this.selectedDepartment == departmentId) {
                 this.selectedDepartment = null
-                this.checkedCriteria = []
+                this.selectedCriteria = []
             } else {
                 this.getDepartmentEvaluationLoader = true
                 this.selectedDepartment = departmentId
@@ -135,9 +151,9 @@ export default {
             this.savingUnitEvaluation = true
             appService.saveUnitEvaluation({
                 id: this.selectedEvaluation,
-                criteria: this.checkedCriteria,
+                criteria: this.selectedCriteria,
             }).then(() => {
-                this.checkedCriteria = []
+                this.selectedCriteria = []
                 this.savingUnitEvaluation = false
             })
         }
