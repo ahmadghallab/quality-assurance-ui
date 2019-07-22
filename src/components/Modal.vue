@@ -36,6 +36,9 @@ export default {
   margin: 3rem auto;
   pointer-events: none;
   width: 80%;
+  border-radius: 5px;
+  padding: 25px;
+  background-color: #fff;
 }
 .dialog-container {
   position: relative;

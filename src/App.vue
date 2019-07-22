@@ -2,7 +2,7 @@
   <div id="app">
     <div class="wrapper">
       <div class="row">
-        <div class="col-auto border-left py-4 side-nav">
+        <div class="col-auto border-left py-3 side-nav">
           <AppHeader />
         </div>
         <div class="col px-0">

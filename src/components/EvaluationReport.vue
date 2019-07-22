@@ -1,5 +1,5 @@
 <template>
-    <div class="default-card">
+    <div>
         <Loader v-if="evaluationReportLoader" />
         <div v-else>
             <table class="table">
@@ -14,7 +14,7 @@
                         <td class="border-top-0">تقرير شهر</td>
                         <td class="font-weight-bold border-bottom">{{ month + '-' + year }}</td>
                         <td class="border-top-0">نتيجة التقرير</td>
-                        <td class="font-weight-bold border-bottom">{{ ((evaluationsChecked.length/evaluations.length) * 100).toFixed(2) }} %</td>
+                        <td class="font-weight-bold border-bottom">{{ finalResult }} %</td>
                     </tr>
                 </tbody>
             </table>
@@ -26,6 +26,7 @@
                         <th class="text-center">الاجمالي</th>
                         <th class="text-center">مستوفي</th>
                         <th class="text-center">غير مستوفي</th>
+                        <th class="text-center">غير متاح</th>
                         <th class="text-center">النسبة %</th>
                     </tr>
                 </thead>
@@ -34,17 +35,22 @@
                         <td class="font-weight-bold">{{ department.department__name }}</td>
                         <td class="text-center">{{ filteredEvaluations(department.department__id).length }}</td>
                         <td class="text-center">
-                            <span class="highlight success-highlight">
-                                {{ filteredEvaluationsChecked(department.department__id) }}
+                            <span class="highlight primary-highlight">
+                                {{ filteredEvaluationsFulfilled(department.department__id) }}
                             </span>
                         </td>
                         <td class="text-center">
                             <span class="highlight light-highlight">
-                                {{ filteredEvaluationsNotChecked(department.department__id) }}
+                                {{ filteredEvaluationsNotFulfilled(department.department__id) }}
+                            </span>
+                        </td>
+                         <td class="text-center">
+                            <span class="highlight light-highlight">
+                                {{ filteredEvaluationsNotApplicable(department.department__id) }}
                             </span>
                         </td>
                         <td class="text-center">
-                            {{ ((filteredEvaluationsChecked(department.department__id) / filteredEvaluations(department.department__id).length) * 100).toFixed(2) }} %
+                            {{ ((filteredEvaluationsFulfilled(department.department__id) / filteredEvaluations(department.department__id).length) * 100).toFixed(2) }} %
                         </td>
                     </tr>
                 </tbody>
@@ -59,8 +65,9 @@
                             v-bind:key="evaluationIdx">
                             <div class="row">
                                 <div class="col-auto align-self-center pl-0">
-                                    <span v-if="evaluation.checked">+</span>
-                                    <span v-else>-</span>
+                                    <span v-if="evaluation.fulfilled == true">+</span>
+                                    <span v-else-if="evaluation.fulfilled == false">-</span>
+                                    <span v-else>!</span>
                                 </div>
                                 <div class="col">
                                     <span class="font-weight-bold">{{ evaluation.criterion__name }}</span>
@@ -105,14 +112,23 @@ export default {
         filteredEvaluations () {
             return (departmentId) => this.evaluations.filter(evaluation => departmentId == evaluation.department_id)
         },
-        filteredEvaluationsChecked () {
-            return (departmentId) => this.filteredEvaluations(departmentId).filter(evaluation => evaluation.checked).length
+        filteredEvaluationsFulfilled () {
+            return (departmentId) => this.filteredEvaluations(departmentId).filter(evaluation => evaluation.fulfilled == true).length
         },
-        filteredEvaluationsNotChecked () {
-            return (departmentId) => this.filteredEvaluations(departmentId).length - this.filteredEvaluationsChecked(departmentId)
+        filteredEvaluationsNotFulfilled () {
+            return (departmentId) => this.filteredEvaluations(departmentId).filter(evaluation => evaluation.fulfilled == false).length
         },
-        evaluationsChecked () {
-            return this.evaluations.filter(evaluation => evaluation.checked)
+        filteredEvaluationsNotApplicable () {
+            return (departmentId) => this.filteredEvaluations(departmentId).filter(evaluation => evaluation.fulfilled == null).length
+        },
+        evaluationsFulfilled () {
+            return this.evaluations.filter(evaluation => evaluation.fulfilled)
+        },
+        evaluationsNotApplicable () {
+            return this.evaluations.filter(evaluation => evaluation.fulfilled == null)
+        },
+        finalResult () {
+            return (((this.evaluationsFulfilled.length + this.evaluationsNotApplicable.length)/this.evaluations.length) * 100).toFixed(2)
         }
     },
     methods: {

@@ -8,6 +8,11 @@ body {
 .side-nav {
   min-height: 100vh;
 }
+.list {
+  border: 1px solid;
+  padding: 15px 20px;
+  margin: 10px 0;
+}
 .circle {
   border-radius: 50%;
   display: inline-flex;
@@ -24,8 +29,8 @@ body {
   height: 40px;
 }
 .dot {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   display: block;
 }
@@ -34,7 +39,7 @@ body {
   fill: #fff;
 }
 .nav-icon {
-  width: 20px;
+  width: 25px;
   fill: #031b4e;
 }
 .default-card {
@@ -46,7 +51,7 @@ ul {
   list-style: none;
 }
 .nested-ul {
-  border-right: 1px solid #e6ecf0;
+  border-right: 1px solid;
 }
 label, .clickable {
   cursor: pointer;
@@ -86,26 +91,26 @@ a:hover, a:focus, a:active {
   padding: 2px 7px;
   border-radius: 4px;
 }
-.border-top, .border-bottom, .border-left, .table td, .table th, .table .thead-light th {
+.list, .nested-ul, .border-top, .border-bottom, .border-left, .table td, .table th, .table .thead-light th {
   border-color: #e6ecf0 !important;
 }
 .light-highlight, .light-highlight:hover, .light-highlight:focus {
   background: #f3f6f9;
 }
 .info-highlight, .info-highlight:hover, .info-highlight:focus {
-  background: #17a2b8;
-  color: #fff;
+  background: #99c2ff;
 }
 .success-highlight, .success-highlight:hover, .success-highlight:focus {
-  background: #19CF86;
-  color: #fff;
+  background: #15c39a;
 }
 .danger-highlight, .danger-highlight:hover, .danger-highlight:focus {
-  background: #e81c4f;
-  color: #fff;
+  background: #ea1537;
 }
-.router-link-exact-active, .primary-highlight, .primary-highlight:hover, .primary-highlight:focus {
+.primary-highlight, .primary-highlight:hover, .primary-highlight:focus {
   background-color: #f1f8ff !important;
+}
+.orange-highlight, .orange-highlight:hover, .orange-highlight:focus {
+  background-color: #ffa600;
 }
 .alert {
   padding: 15px 20px;
@@ -133,7 +138,7 @@ a:hover, a:focus, a:active {
   body {
     font-size: 18px !important;
   } 
-  nav, form, .btn, .screen-only, .alert  {
+  .side-nav, form, .btn, .screen-only, .alert  {
     display: none;
   }
   a {

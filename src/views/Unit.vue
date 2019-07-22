@@ -11,7 +11,6 @@
                     <li class="mb-2" v-for="(evaluation, evaluationIdx) in unitEvaluations" v-bind:key="evaluationIdx">
                         <a href="javascript:void(0)"
                             class="font-weight-bold"
-                            v-bind:class="{'highlight light-highlight': selectedEvaluation == evaluationIdx}"
                             v-on:click="toggleEvaluationList(evaluationIdx)">
                             {{ evaluation.month + '.' + evaluation.year }}
                         </a>
