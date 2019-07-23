@@ -1,15 +1,15 @@
 <template>
   <div>
-    <div class="default-card border-bottom">
+    <div class="default-card">
       <h6 class="font-weight-bold mb-0">الادارات الصحية والوحدات التابعه لها</h6>
     </div>
-    <div class="default-card">
-      <Loader v-if="listManagementsLoader" />
-      <ul class="list-unstyled pr-0" v-else>
-        <li class="mb-1" v-for="(management, managementIdx) in managements" v-bind:key="managementIdx">
+    <Loader v-if="listManagementsLoader" />
+    <div v-else>
+      <div v-for="(management, managementIdx) in managements" v-bind:key="managementIdx">
+        <div class="card__header border-bottom">
           <a href="javascript:void(0)"
             v-on:click="editManagementModal(management.id)" 
-            class="highlight font-weight-bold">{{ management.name }}
+            class="font-weight-bold">{{ management.name }}
           </a>
           <Modal v-if="toggleEditManagementModal && selectedManagement == management.id ">
             <div slot="body">
@@ -32,71 +32,82 @@
               </form>
             </div>
           </Modal>
-          <ul class="nested-ul">
-            <li class="mt-2" v-for="(unit, unitIdx) in management.units" v-bind:key="unitIdx">
-              <div class="btn-group">
-                <a href="javascript:void(0)"
-                  v-on:click="toggleUnitDropdown(unit.id)" 
-                  class="font-weight-bold"
-                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ unit.name }}</a>
-                <div class="dropdown-menu"
-                  v-bind:class="[selectedUnit == unit.id ? 'show' : '']">
-                  <router-link class="dropdown-item" 
-                    :to="{ name: 'unit', params: {id: unit.id} }">Display</router-link>
-                  <a class="dropdown-item" href="javascript:void(0)"
-                    v-on:click="toggleEditUnitModal = true">Edit</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Delete</a>
-                </div>
-              </div>
-              <Modal v-if="toggleEditUnitModal && selectedUnit == unit.id ">
-                <div slot="body">
-                  <form v-on:submit.prevent="editUnit(unit.id, managementIdx, unitIdx)">
-                    <div class="form-group">
-                      <label for="unitName">Unit Name</label>
-                      <input type="text"
-                        id="unitName"
-                        autocomplete="off"
-                        v-model="unit.name" 
-                        class="form-control"  
-                        placeholder="+ أضف وحدة صحية">
-                    </div>
-                    <button type="submit" 
-                      class="btn btn-info btn-sm mr-2"
-                      v-on:click="toggleEditUnitModal = false">Save</button>
-                    <button type="button" 
-                      class="btn btn-light btn-sm"
-                      v-on:click="toggleEditUnitModal = false">Cancel</button>
-                  </form>
-                </div>
-              </Modal>
-            </li>
-            <div class="row mt-2">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <input type="text"
-                    v-model="unitName[managementIdx]"
-                    autocomplete="off"
-                    class="form-control"  
-                    placeholder="+ أضف وحدة صحية"
-                    v-on:keydown.enter="postUnit(management.id, managementIdx)">
-                </div>
+        </div>
+        <div class="card__body light-highlight px-0 py-0">
+          <div class="list list-lc" v-for="(unit, unitIdx) in management.units" v-bind:key="unitIdx">
+            <div class="btn-group">
+              <a href="javascript:void(0)"
+                v-on:click="toggleUnitDropdown(unit.id)" 
+                class="font-weight-bold"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ unit.name }}</a>
+              <div class="dropdown-menu"
+                v-bind:class="[selectedUnit == unit.id ? 'show' : '']">
+                <router-link class="dropdown-item" 
+                  :to="{ name: 'unit', params: {id: unit.id} }">Display</router-link>
+                <a class="dropdown-item" href="javascript:void(0)"
+                  v-on:click="toggleEditUnitModal = true">Edit</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Delete</a>
               </div>
             </div>
-          </ul>
-        </li>
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
+            <Modal v-if="toggleEditUnitModal && selectedUnit == unit.id ">
+              <div slot="body">
+                <form v-on:submit.prevent="editUnit(unit.id, managementIdx, unitIdx)">
+                  <div class="form-group">
+                    <label for="unitName">Unit Name</label>
+                    <input type="text"
+                      id="unitName"
+                      autocomplete="off"
+                      v-model="unit.name" 
+                      class="form-control"  
+                      placeholder="+ أضف وحدة صحية">
+                  </div>
+                  <button type="submit" 
+                    class="btn btn-info btn-sm mr-2"
+                    v-on:click="toggleEditUnitModal = false">Save</button>
+                  <button type="button" 
+                    class="btn btn-light btn-sm"
+                    v-on:click="toggleEditUnitModal = false">Cancel</button>
+                </form>
+              </div>
+            </Modal>
+          </div>
+          <div class="text-muted py-4 px-4" v-if="!management.units.length">
+            <small>لا يوجد وحدات صحية لهذه الادارة</small>
+          </div>
+        </div>
+        <div class="card__footer border-top">
+          <form v-on:submit.prevent="postUnit(management.id, managementIdx)">
+            <div class="form-row">
+              <div class="col">
+                <input type="text"
+                v-model="unitName[managementIdx]"
+                autocomplete="off"
+                class="form-control"  
+                placeholder="+ أضف وحدة صحية">
+              </div>
+              <div class="col-auto">
+                <button type="submit" class="btn btn-sm btn-light">إنشاء</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="default-card">
+        <form v-on:submit.prevent="postManagement()">
+          <div class="form-row">
+            <div class="col">
               <input type="text" class="form-control"
                 autocomplete="off"
                 v-model="managementName" 
-                placeholder="+ أضف إدارة صحية"
-                v-on:keydown.enter="postManagement()">
+                placeholder="+ أضف إدارة صحية">
+            </div>
+            <div class="col-auto">
+              <button type="submit" class="btn btn-sm btn-light">إنشاء</button>
             </div>
           </div>
-        </div>
-      </ul>
+        </form>
+      </div>
     </div>
   </div>
 </template>

@@ -53,22 +53,4 @@ export default {
   transform: translateY(5px);
   opacity: 0;
 }
-@media print {
-  .dialog-mask {
-    position: absolute;
-    left: 0;
-    top: 0;
-    margin: 0;
-    padding: 0;
-    visibility: visible;
-    /**Remove scrollbar for printing.**/
-    overflow: visible !important;
-  }
-  .dialog-wrapper {
-    visibility: visible !important;
-    /**Remove scrollbar for printing.**/
-    overflow: visible !important;
-  }
-}
-
 </style>

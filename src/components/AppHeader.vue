@@ -1,27 +1,27 @@
 <template>
-    <ul class="pr-0">
-        <li class="mb-2">
-            <router-link class="circle circle-lg" :to="{name: 'home'}">
-                <svg viewBox="0 0 24 24" class="nav-icon"><g><path d="M22.58 7.35L12.475 1.897c-.297-.16-.654-.16-.95 0L1.425 7.35c-.486.264-.667.87-.405 1.356.18.335.525.525.88.525.16 0 .324-.038.475-.12l.734-.396 1.59 11.25c.216 1.214 1.31 2.062 2.66 2.062h9.282c1.35 0 2.444-.848 2.662-2.088l1.588-11.225.737.398c.485.263 1.092.082 1.354-.404.263-.486.08-1.093-.404-1.355zM12 15.435c-1.795 0-3.25-1.455-3.25-3.25s1.455-3.25 3.25-3.25 3.25 1.455 3.25 3.25-1.455 3.25-3.25 3.25z"></path></g></svg>
-            </router-link>
-        </li>
-        <li class="mb-2">
-            <router-link class="circle circle-lg" :to="{name: 'management'}">
-                <svg viewBox="0 0 24 24" class="nav-icon"><g><path d="M21 7.337h-3.93l.372-4.272c.036-.412-.27-.775-.682-.812-.417-.03-.776.27-.812.683l-.383 4.4h-6.32l.37-4.27c.037-.413-.27-.776-.68-.813-.42-.03-.777.27-.813.683l-.382 4.4H3.782c-.414 0-.75.337-.75.75s.336.75.75.75H7.61l-.55 6.327H3c-.414 0-.75.336-.75.75s.336.75.75.75h3.93l-.372 4.272c-.036.412.27.775.682.812l.066.003c.385 0 .712-.295.746-.686l.383-4.4h6.32l-.37 4.27c-.036.413.27.776.682.813l.066.003c.385 0 .712-.295.746-.686l.382-4.4h3.957c.413 0 .75-.337.75-.75s-.337-.75-.75-.75H16.39l.55-6.327H21c.414 0 .75-.336.75-.75s-.336-.75-.75-.75zm-6.115 7.826h-6.32l.55-6.326h6.32l-.55 6.326z"></path></g></svg>
-            </router-link>
-        </li>
-        <li>
-            <router-link class="circle circle-lg" :to="{name: 'criterion'}">
-                <svg viewBox="0 0 512 512" class="nav-icon">
-                    <g>
-                        <path d="M437.02,330.98c-27.883-27.882-61.071-48.523-97.281-61.018C378.521,243.251,404,198.548,404,148
-                            C404,66.393,337.607,0,256,0S108,66.393,108,148c0,50.548,25.479,95.251,64.262,121.962
-                            c-36.21,12.495-69.398,33.136-97.281,61.018C26.629,379.333,0,443.62,0,512h40c0-119.103,96.897-216,216-216s216,96.897,216,216
-                            h40C512,443.62,485.371,379.333,437.02,330.98z M256,256c-59.551,0-108-48.448-108-108S196.449,40,256,40
-                            c59.551,0,108,48.448,108,108S315.551,256,256,256z"/>
-                    </g>
-                </svg>
-            </router-link>
-        </li>
-    </ul>
+    <nav class="bg-primary customNav fixed-top">
+        <div class="row justify-content-between bootstrap-nav">
+            <div class="col-auto"></div>
+            <div class="col-auto align-self-center">
+                <ul class="list-inline mb-0 pr-0">
+                    <li class="list-inline-item">
+                        <router-link class="font-weight-bold nav-link" :to="{name: 'home'}">
+                            الرئيسية
+                        </router-link>
+                    </li>
+                    <li class="list-inline-item">
+                        <router-link class="font-weight-bold nav-link" :to="{name: 'management'}">
+                            الادارات
+                        </router-link>
+                    </li>
+                    <li class="list-inline-item">
+                        <router-link class="font-weight-bold nav-link" :to="{name: 'criterion'}">
+                            المعايير
+                        </router-link>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-auto"></div>
+        </div>
+    </nav>
 </template>

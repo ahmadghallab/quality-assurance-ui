@@ -1,14 +1,8 @@
 <template>
   <div id="app">
+    <AppHeader />
     <div class="wrapper">
-      <div class="row">
-        <div class="col-auto border-left py-3 side-nav">
-          <AppHeader />
-        </div>
-        <div class="col px-0">
-          <router-view/>
-        </div>
-      </div>
+      <router-view/>
     </div>
   </div>
 </template>

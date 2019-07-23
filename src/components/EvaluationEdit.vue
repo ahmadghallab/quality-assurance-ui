@@ -1,70 +1,81 @@
 <template>
     <div>
         <Loader v-if="editUnitEvaluationLoader" />
-        <ul class="nested-ul my-2" v-else>
-            <li class="mb-2" v-for="(department, departmentIdx) in departments"     
+        <div v-else>
+            <div v-for="(department, departmentIdx) in departments"     
                 v-bind:key="departmentIdx">
-                <a href="javascript:void(0)" class="font-weight-bold"
-                    @click="getUnitEvaluation(department.department__id)">
-                    {{ department.department__name }}
-                </a>
+                <div class="list light-highlight">
+                    <div class="row justify-content-between">
+                        <div class="col align-self-center">
+                            <a href="javascript:void(0)" class="font-weight-bold"
+                                @click="getUnitEvaluation(department.department__id)">
+                                {{ department.department__name }}
+                            </a>
+                        </div>
+                        <div class="col-auto align-self-center" 
+                            v-if="selectedDepartment == department.department__id">
+                            <button type="button" class="btn btn-sm ml-2"
+                                v-bind:class="[allSelected ? 'btn-secondary' : 'btn-light']" 
+                                @click="selectAll()">تحديد</button>
+                            <button type="button" class="btn btn-light btn-sm ml-1"
+                                v-on:click="saveUnitEvaluation('fulfilled', true)" :disabled="savingUnitEvaluation || !selectedCriteria.length">مستوفي
+                            </button>
+                            <button type="button" class="btn btn-light btn-sm ml-1"
+                                v-on:click="saveUnitEvaluation('fulfilled', false)" :disabled="savingUnitEvaluation || !selectedCriteria.length">غير مستوفي
+                            </button>
+                            <button type="button" class="btn btn-light btn-sm ml-2"
+                                v-on:click="saveUnitEvaluation('fulfilled', null)" :disabled="savingUnitEvaluation || !selectedCriteria.length">غير مطبق
+                            </button>
+                            <button type="button" class="btn btn-light btn-sm"
+                                v-on:click="toggleAddTextModal = true" :disabled="savingUnitEvaluation || !selectedCriteria.length">نص
+                            </button>
+                            <Modal v-if="toggleAddTextModal">
+                                <div slot="body">
+                                    <form v-on:submit.prevent="saveUnitEvaluation('text', evaluations[selectedCriteriaIdx[0]].text)">
+                                        <div class="form-group">
+                                            <textarea
+                                            id="criterionText"
+                                            autocomplete="off"
+                                            v-model="evaluations[selectedCriteriaIdx[0]].text" 
+                                            class="form-control"  
+                                            placeholder="+ ادخل نص"></textarea>
+                                        </div>
+                                        <button type="submit" 
+                                            class="btn btn-info btn-sm ml-2"
+                                            :disabled="savingUnitEvaluation">حفظ</button>
+                                        <button type="button" 
+                                            class="btn btn-light btn-sm"
+                                            v-on:click="toggleAddTextModal = false">الغاء</button>
+                                        </form>
+                                </div>
+                            </Modal>
+                        </div>
+                    </div>
+                </div>
                 <Loader v-if="selectedDepartment == department.department__id && getDepartmentEvaluationLoader" />
-                <ul class="nested-ul" v-else-if="selectedDepartment == department.department__id">
-                    <li class="list clickable" 
+                <div v-else-if="selectedDepartment == department.department__id">
+                    <div class="list criterion-list clickable" 
                         v-for="(evaluation, evaluationIdx) in evaluations" v-bind:key="evaluationIdx"
                         v-on:click="select(evaluationIdx, evaluation.id)"
-                        v-bind:class="{'light-highlight': selected(evaluation.id)}">
+                        v-bind:class="{
+                            'primary-highlight': selected(evaluation.id),
+                            'fulfilled': evaluation.fulfilled == true,
+                            'not-fulfilled': evaluation.fulfilled == false,
+                            'not-applicable': evaluation.fulfilled == null,
+                        }">
                         <span class="font-weight-bold">{{ evaluation.criterion__name }}</span>
                         <div class="mt-1 text-muted">
                             <small v-if="evaluation.fulfilled == true">مستوفي</small>
                             <small v-else-if="evaluation.fulfilled == false">غير مسوفي</small>
                             <small v-else>غير مطبق</small>
                         </div>
-                        <ul class="nested-ul" v-if="evaluation.text">
+                        <ul class="nested-ul mb-0" v-if="evaluation.text">
                             <li class="mt-1"><small class="text-muted">{{ evaluation.text }}</small></li>
                         </ul>
-                    </li>
-                    <div class="form-group mt-3">
-                        <button type="button" class="btn btn-sm ml-2"
-                            v-bind:class="[allSelected ? 'btn-secondary' : 'btn-light']" 
-                            @click="selectAll()">تحديد الكل
-                        </button>
-                        <button type="button" class="btn btn-light btn-sm ml-1"
-                            v-on:click="saveUnitEvaluation('fulfilled', true)" :disabled="savingUnitEvaluation || !selectedCriteria.length">مستوفي
-                        </button>
-                        <button type="button" class="btn btn-light btn-sm ml-1"
-                            v-on:click="saveUnitEvaluation('fulfilled', false)" :disabled="savingUnitEvaluation || !selectedCriteria.length">غير مستوفي
-                        </button>
-                        <button type="button" class="btn btn-light btn-sm ml-2"
-                            v-on:click="saveUnitEvaluation('fulfilled', null)" :disabled="savingUnitEvaluation || !selectedCriteria.length">غير مطبق
-                        </button>
-                        <button type="button" class="btn btn-light btn-sm"
-                            v-on:click="toggleAddTextModal = true" :disabled="savingUnitEvaluation || !selectedCriteria.length">نص
-                        </button>
-                        <Modal v-if="toggleAddTextModal">
-                            <div slot="body">
-                                <form v-on:submit.prevent="saveUnitEvaluation('text', evaluations[selectedCriteriaIdx[0]].text)">
-                                    <div class="form-group">
-                                        <textarea
-                                        id="criterionText"
-                                        autocomplete="off"
-                                        v-model="evaluations[selectedCriteriaIdx[0]].text" 
-                                        class="form-control"  
-                                        placeholder="+ ادخل نص"></textarea>
-                                    </div>
-                                    <button type="submit" 
-                                        class="btn btn-info btn-sm ml-2"
-                                        :disabled="savingUnitEvaluation">حفظ</button>
-                                    <button type="button" 
-                                        class="btn btn-light btn-sm"
-                                        v-on:click="toggleAddTextModal = false">الغاء</button>
-                                    </form>
-                            </div>
-                        </Modal>
                     </div>
-                </ul>
-            </li>
-        </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>

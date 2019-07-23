@@ -1,5 +1,5 @@
 <template>
-<div class="align-self-center">
+<div class="align-self-center py-4">
   <div class="circle-spinner"></div>
 </div>
 </template>
@@ -13,7 +13,7 @@
   }
 }
 .circle-spinner {
-  margin: 25px;
+  margin: 0 auto;
   width: 25px;
   height: 25px;
   border-radius: 50%;

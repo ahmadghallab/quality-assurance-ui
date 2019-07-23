@@ -1,76 +1,72 @@
 <template>  
     <div>
-        <Loader v-if="retrieveUnitLoader" />
+        <Loader v-if="retrieveUnitLoader && listUnitEvaluationLoader" />
         <div v-else>
-            <div class="default-card border-bottom">
+            <div class="card__header bg-primary text-white">
                 <h6 class="font-weight-bold mb-0">{{ unitName }}</h6>
             </div>
-            <Loader v-if="listUnitEvaluationLoader" />
-            <div class="default-card" v-else>
-                <ul class="pr-0 mb-0">
-                    <li class="mb-2" v-for="(evaluation, evaluationIdx) in unitEvaluations" v-bind:key="evaluationIdx">
-                        <a href="javascript:void(0)"
-                            class="font-weight-bold"
-                            v-on:click="toggleEvaluationList(evaluationIdx)">
-                            {{ evaluation.month + '.' + evaluation.year }}
-                        </a>
-                        <EvaluationEdit
-                            v-if="toggleEvaluation && selectedEvaluation == evaluationIdx" 
-                            v-bind:unitId="unitId" 
-                            v-bind:month="evaluation.month"
-                            v-bind:year="evaluation.year" 
-                        />
-                        <Modal width="800px" v-if="toggleEvaluationReportModal && selectedEvaluation == evaluationIdx">
-                            <div slot="body">
-                                <EvaluationReport
-                                    v-bind:unitId="unitId" 
-                                    v-bind:month="evaluation.month"
-                                    v-bind:year="evaluation.year" 
-                                    @close="toggleEvaluationReportModal = false"
-                                />
+            <div class="card__body px-0 py-0">
+                <div v-for="(evaluation, evaluationIdx) in unitEvaluations"    
+                    v-bind:key="evaluationIdx">
+                    <div class="list">
+                        <div class="row justify-content-between">
+                            <div class="col align-self-center">
+                                <a href="javascript:void(0)"
+                                    v-on:click="toggleEvaluationList(evaluationIdx)">
+                                    <small class="text-muted d-block">تقييم شهر</small>
+                                    <span class="font-weight-bold">
+                                        {{ evaluation.month + '.' + evaluation.year }}
+                                    </span>
+                                </a>
                             </div>
-                        </Modal>
-                        <Modal width="500px" v-if="toggleDeleteEvaluationModal && selectedEvaluation == evaluationIdx">
-                            <div slot="body" class="text-left">
-                                <div class="card__header">
-                                    <p class="text-muted">
-                                    You are about to delete <span class="highlight info-highlight">{{ evaluation.month + '.' + evaluation.year }}</span> evaluation. No one will be able to access this evaluation ever again
-                                    </p>
-                                    <p class="font-weight-bold mt-4 mb-0">Are you absolutely positive? There's no undo</p>
-                                </div>
-                                <div class="card__footer light-highlight border-top">
-                                    <button type="button" @click="deleteUnitEvaluation(evaluationIdx, evaluation.month, evaluation.year)"
-                                        class="btn btn-info btn-sm ml-2" :disabled="deletingUnitEvaluation">
-                                        {{ deletingUnitEvaluation ? 'Deleting' : 'Yes, delete' }}
-                                    </button>
-                                    <button type="button" 
-                                        class="btn btn-light btn-sm bg-white"
-                                        v-on:click="toggleDeleteEvaluationModal = false">Cancel
-                                    </button>
-                                </div>
+                            <div class="col-auto align-self-center" 
+                                v-if="selectedEvaluation == evaluationIdx">
+                                <router-link 
+                                    class="btn btn-light btn-sm"
+                                    :to="{ 
+                                        name: 'unitEvaluationReport', 
+                                        params: {id: unitId}, 
+                                        query: {month: evaluation.month, year: evaluation.year}
+                                    }">تقرير
+                                </router-link>
+                                <button type="button" class="btn btn-light btn-sm mx-2">تزامن
+                                </button>
+                                <button type="button" class="btn btn-light btn-sm"
+                                    v-on:click="toggleDeleteEvaluationModal = true">حذف
+                                </button>
                             </div>
-                        </Modal>
-                        <div v-if="selectedEvaluation == evaluationIdx">
-                            <!-- <router-link 
-                            :to="{ 
-                                name: 'evaluationReport', 
-                                params: {id: unitId}, 
-                                query: {month: evaluation.month, year: evaluation.year}
-                            }">طباعة تقرير</router-link> -->
-                            <button type="button" class="btn btn-light btn-sm"
-                                v-on:click="toggleEvaluationReportModal = true">عرض تقرير
-                            </button>
-                            <button type="button" class="btn btn-light btn-sm mx-2">تزامن
-                            </button>
-                            <button type="button" class="btn btn-light btn-sm"
-                                v-on:click="toggleDeleteEvaluationModal = true">حذف
-                            </button>
                         </div>
-                    </li>
-                    <p class="text-muted" v-if="!unitEvaluations.length">لا يوجد تقييمات حتي الان</p>    
-                </ul>
+                    </div>
+                    <EvaluationEdit
+                        v-if="toggleEvaluation && selectedEvaluation == evaluationIdx" 
+                        v-bind:unitId="unitId" 
+                        v-bind:month="evaluation.month"
+                        v-bind:year="evaluation.year" 
+                    />
+                    <Modal width="500px" v-if="toggleDeleteEvaluationModal && selectedEvaluation == evaluationIdx">
+                        <div slot="body" class="text-left">
+                            <div class="card__header">
+                                <p class="text-muted">
+                                You are about to delete <span class="highlight info-highlight">{{ evaluation.month + '.' + evaluation.year }}</span> evaluation. No one will be able to access this evaluation ever again
+                                </p>
+                                <p class="font-weight-bold mt-4 mb-0">Are you absolutely positive? There's no undo</p>
+                            </div>
+                            <div class="card__footer light-highlight border-top">
+                                <button type="button" @click="deleteUnitEvaluation(evaluationIdx, evaluation.month, evaluation.year)"
+                                    class="btn btn-info btn-sm ml-2" :disabled="deletingUnitEvaluation">
+                                    {{ deletingUnitEvaluation ? 'Deleting' : 'Yes, delete' }}
+                                </button>
+                                <button type="button" 
+                                    class="btn btn-light btn-sm bg-white"
+                                    v-on:click="toggleDeleteEvaluationModal = false">Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </Modal>
+                </div>
+                <p class="text-muted" v-if="!unitEvaluations.length">لا يوجد تقييمات حتي الان</p>
             </div>
-            <div class="default-card border-top">
+            <div class="card__footer">
                 <form v-on:submit.prevent="createUnitEvaluation()">
                     <div class="form-row">
                         <div class="col-2">
@@ -95,19 +91,16 @@ import appService from '../app.service.js'
 import Modal from '../components/Modal'
 import Loader from '../components/Loader'
 import EvaluationEdit from '../components/EvaluationEdit'
-import EvaluationReport from '../components/EvaluationReport'
 
 export default {
     components: {
         Modal,
         Loader,
-        EvaluationEdit,
-        EvaluationReport
+        EvaluationEdit
     },
     data () {
         return {
             toggleDeleteEvaluationModal: false,
-            toggleEvaluationReportModal: false,
             toggleEvaluation: false,
             deletingUnitEvaluation: false,
             creatingUnitEvaluation: false,
