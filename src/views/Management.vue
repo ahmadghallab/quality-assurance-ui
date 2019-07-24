@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="default-card">
-      <h6 class="font-weight-bold mb-0">الادارات الصحية والوحدات التابعه لها</h6>
+      <h6 class="font-weight-bold mb-0">الادارات الصحية والوحدات التابعه لها</h6> 
     </div>
     <Loader v-if="listManagementsLoader" />
     <div v-else>
@@ -12,10 +12,10 @@
             class="font-weight-bold">{{ management.name }}
           </a>
           <Modal v-if="toggleEditManagementModal && selectedManagement == management.id ">
-            <div slot="body">
+            <div slot="body" class="default-card">
               <form v-on:submit.prevent="editManagement(management.id, managementIdx)">
                 <div class="form-group">
-                  <label for="managementName">Management Name</label>
+                  <label for="managementName">اسم الادارة</label>
                   <input type="text"
                     id="managementName"
                     autocomplete="off"
@@ -24,37 +24,33 @@
                     placeholder="+ أضف إدارة صحية">
                 </div>
                 <button type="submit" 
-                  class="btn btn-info btn-sm mr-2"
-                  v-on:click="toggleEditManagementModal = false">Save</button>
+                  class="btn btn-primary btn-sm ml-2"
+                  v-on:click="toggleEditManagementModal = false">حفظ</button>
                 <button type="button" 
                   class="btn btn-light btn-sm"
-                  v-on:click="toggleEditManagementModal = false">Cancel</button>
+                  v-on:click="toggleEditManagementModal = false">إلغاء</button>
               </form>
             </div>
           </Modal>
         </div>
         <div class="card__body light-highlight px-0 py-0">
           <div class="list list-lc" v-for="(unit, unitIdx) in management.units" v-bind:key="unitIdx">
-            <div class="btn-group">
-              <a href="javascript:void(0)"
-                v-on:click="toggleUnitDropdown(unit.id)" 
-                class="font-weight-bold"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ unit.name }}</a>
-              <div class="dropdown-menu"
-                v-bind:class="[selectedUnit == unit.id ? 'show' : '']">
-                <router-link class="dropdown-item" 
-                  :to="{ name: 'unit', params: {id: unit.id} }">Display</router-link>
-                <a class="dropdown-item" href="javascript:void(0)"
-                  v-on:click="toggleEditUnitModal = true">Edit</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Delete</a>
+            <div class="row justify-centent-between">
+              <div class="col align-self-center">
+                <router-link class="font-weight-bold" 
+                  :to="{ name: 'unit', params: {id: unit.id} }">{{ unit.name }}</router-link>
+              </div>
+              <div class="col-auto align-self-center">
+                <button type="button" class="btn btn-light btn-sm ml-1" 
+                  v-on:click="unitEdit(unit.id)">تعديل</button>
+                <button type="button" class="btn btn-light btn-sm">حذف</button>
               </div>
             </div>
             <Modal v-if="toggleEditUnitModal && selectedUnit == unit.id ">
-              <div slot="body">
+              <div slot="body" class="default-card">
                 <form v-on:submit.prevent="editUnit(unit.id, managementIdx, unitIdx)">
                   <div class="form-group">
-                    <label for="unitName">Unit Name</label>
+                    <label for="unitName">إسم الوحدة الصحية</label>
                     <input type="text"
                       id="unitName"
                       autocomplete="off"
@@ -63,11 +59,11 @@
                       placeholder="+ أضف وحدة صحية">
                   </div>
                   <button type="submit" 
-                    class="btn btn-info btn-sm mr-2"
-                    v-on:click="toggleEditUnitModal = false">Save</button>
+                    class="btn btn-primary btn-sm ml-2"
+                    v-on:click="toggleEditUnitModal = false">حفظ</button>
                   <button type="button" 
                     class="btn btn-light btn-sm"
-                    v-on:click="toggleEditUnitModal = false">Cancel</button>
+                    v-on:click="toggleEditUnitModal = false">إلغاء</button>
                 </form>
               </div>
             </Modal>
@@ -126,7 +122,6 @@ export default {
       listManagementsLoader: true,
       toggleEditUnitModal: false,
       toggleEditManagementModal: false,
-      showUnitDropdown: false,
       selectedUnit: null,
       selectedManagement: null,
       managementName: null,
@@ -135,12 +130,9 @@ export default {
     }
   },
   methods: {
-    toggleUnitDropdown(unitId) {
-      if (unitId == this.selectedUnit) {
-        this.selectedUnit = null
-      } else {
-        this.selectedUnit = unitId
-      }
+    unitEdit(unitId) {
+      this.selectedUnit = unitId
+      this.toggleEditUnitModal = true
     },
     editManagementModal(managementtId) {
       this.selectedManagement = managementtId

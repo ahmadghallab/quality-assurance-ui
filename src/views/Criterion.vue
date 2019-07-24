@@ -1,44 +1,50 @@
 <template>
-  <div class="default-card">
+  <div>
+    <div class="default-card">
+      <h6 class="font-weight-bold mb-0">الاقسام والمعايير التابعه لها</h6> 
+    </div>
     <Loader v-if="listDepartmentsLoader" />
-    <ul class="list-unstyled pr-0" v-else>
-      <li class="mb-1" v-for="(department, departmentIdx) in departments" v-bind:key="departmentIdx">
-        <a href="javascript:void(0)"
-          v-on:click="editDepartmentModal(department.id)" 
-          class="highlight font-weight-bold">{{ department.name }}
-        </a>
-        <Modal v-if="toggleEditDepartmentModal && selectedDepartment == department.id ">
-          <div slot="body">
-            <form v-on:submit.prevent="editDepartment(department.id, departmentIdx)">
-              <div class="form-group">
-                <label for="departmentName">Department Name</label>
-                <input type="text"
-                  id="departmentName"
-                  autocomplete="off"
-                  v-model="department.name" 
-                  class="form-control"  
-                  placeholder="+ add department">
-              </div>
-              <button type="submit" 
-                class="btn btn-info btn-sm mr-2"
-                v-on:click="toggleEditDepartmentModal = false">Save</button>
-              <button type="button" 
-                class="btn btn-light btn-sm"
-                v-on:click="toggleEditDepartmentModal = false">Cancel</button>
-            </form>
-          </div>
-        </Modal>
-        <ul class="nested-ul">
-          <li class="mt-2" v-for="(criterion, criterionIdx) in department.criteria" v-bind:key="criterionIdx">
+    <div v-else>
+      <div v-for="(department, departmentIdx) in departments" v-bind:key="departmentIdx">
+        <div class="card__header border-bottom">
+          <a href="javascript:void(0)"
+            v-on:click="editDepartmentModal(department.id)" 
+            class="font-weight-bold">{{ department.name }}
+          </a>
+          <Modal v-if="toggleEditDepartmentModal && selectedDepartment == department.id ">
+            <div slot="body" class="default-card">
+              <form v-on:submit.prevent="editDepartment(department.id, departmentIdx)">
+                <div class="form-group">
+                  <label for="departmentName">اسم القسم</label>
+                  <input type="text"
+                    id="departmentName"
+                    autocomplete="off"
+                    v-model="department.name" 
+                    class="form-control"  
+                    placeholder="+ أضف قسم">
+                </div>
+                <button type="submit" 
+                  class="btn btn-primary btn-sm ml-2"
+                  v-on:click="toggleEditDepartmentModal = false">حفظ</button>
+                <button type="button" 
+                  class="btn btn-light btn-sm"
+                  v-on:click="toggleEditDepartmentModal = false">إلغاء</button>
+              </form>
+            </div>
+          </Modal>
+        </div>
+        <div class="card__body light-highlight px-0 py-0">
+          <div class="list list-lc" v-for="(criterion, criterionIdx) in department.criteria" v-bind:key="criterionIdx">
             <a href="javascript:void(0)" 
               class="font-weight-bold"
               v-on:click="editCriterionModal(criterion.id)">
               {{ criterion.name }}
             </a>
             <Modal v-if="toggleEditCriterionModal && selectedCriterion == criterion.id ">
-              <div slot="body">
+              <div slot="body" class="default-card">
                 <form v-on:submit.prevent="editCriterion(criterion.id, departmentIdx, criterionIdx)">
                   <div class="form-group">
+                    <label for="departmentName">المعيار</label>
                     <input type="text"
                       id="criterionName"
                       autocomplete="off"
@@ -47,7 +53,7 @@
                       placeholder="+ المعيار">
                   </div>
                   <button type="submit" 
-                    class="btn btn-info btn-sm ml-2"
+                    class="btn btn-primary btn-sm ml-2"
                     v-on:click="toggleEditCriterionModal = false">حفظ</button>
                   <button type="button" 
                     class="btn btn-light btn-sm"
@@ -55,33 +61,41 @@
                 </form>
               </div>
             </Modal>
-          </li>
-          <div class="row mt-2">
-            <div class="col-12 col-sm-8">
-              <div class="form-group">
+          </div>
+        </div>
+        <div class="card__footer border-top">
+          <form v-on:submit.prevent="postCriterion(department.id, departmentIdx)">
+            <div class="form-row">
+              <div class="col">
                 <input type="text"
                   v-model="criterionName[departmentIdx]"
                   autocomplete="off"
                   class="form-control"  
-                  placeholder="+ أضف معيار"
-                  v-on:keydown.enter="postCriterion(department.id, departmentIdx)">
+                  placeholder="+ أضف معيار">
+              </div>
+              <div class="col-auto">
+                <button type="submit" class="btn btn-sm btn-light">إنشاء</button>
               </div>
             </div>
-          </div>
-        </ul>
-      </li>
-      <div class="row">
-        <div class="col-12 col-sm-8">
-          <div class="form-group">
-            <input type="text" class="form-control"
-              autocomplete="off"
-              v-model="departmentName" 
-              placeholder="+ أضف قسم"
-              v-on:keydown.enter="postDepartment()">
-          </div>
+          </form>
         </div>
       </div>
-    </ul>
+      <div class="default-card">
+        <form v-on:submit.prevent="postDepartment()">
+          <div class="form-row">
+            <div class="col">
+              <input type="text" class="form-control"
+                autocomplete="off"
+                v-model="departmentName" 
+                placeholder="+ أضف قسم">
+            </div>
+            <div class="col-auto">
+              <button type="submit" class="btn btn-sm btn-light">إنشاء</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </template>
 <script>

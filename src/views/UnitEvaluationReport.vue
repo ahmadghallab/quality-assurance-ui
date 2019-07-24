@@ -19,9 +19,9 @@
                     <tbody>
                         <tr>
                             <td class="border-top-0">الادارة الصحية</td>
-                            <td class="font-weight-bold border-top-0 border-bottom">{{ unit.management__name }}</td>
+                            <td class="font-weight-bold border-top-0">{{ unit.management__name }}</td>
                             <td class="border-top-0">الوحدة الصحية</td>
-                            <td class="font-weight-bold border-top-0 border-bottom">{{ unit.name }}</td>
+                            <td class="font-weight-bold border-top-0">{{ unit.name }}</td>
                         </tr>
                         <tr>
                             <td>تقرير شهر</td>
@@ -62,7 +62,7 @@
                                 </span>
                             </td>
                             <td class="text-center">
-                                {{ ((filteredEvaluationsFulfilled(department.department__id) / filteredEvaluations(department.department__id).length) * 100).toFixed(2) }} %
+                                {{ ((filteredEvaluationsFulfilled(department.department__id) / filteredEvaluations(department.department__id).length) * 100).toFixed(1) }} %
                             </td>
                         </tr>
                     </tbody>
@@ -82,36 +82,37 @@
                             </tr>
                         </thead>
                         <tbody v-bind:key="'A' + departmentIdx">
-                            <tr v-for="(evaluation, evaluationIdx) in filteredEvaluations(department.department__id)" v-bind:key="'B' + evaluationIdx">
-                                <td class="align-middle font-weight-bold">
-                                    {{ evaluation.criterion__name }}
-                                </td>
-                                <td class="align-middle text-center font-weight-bold">
-                                    <span v-if="evaluation.fulfilled == true">
-                                        <svg viewBox="0 0 45.701 45.7" class="check-icon">
-                                            <g>
-                                                <path d="M20.687,38.332c-2.072,2.072-5.434,2.072-7.505,0L1.554,26.704c-2.072-2.071-2.072-5.433,0-7.504
-                                                    c2.071-2.072,5.433-2.072,7.505,0l6.928,6.927c0.523,0.522,1.372,0.522,1.896,0L36.642,7.368c2.071-2.072,5.433-2.072,7.505,0
-                                                    c0.995,0.995,1.554,2.345,1.554,3.752c0,1.407-0.559,2.757-1.554,3.752L20.687,38.332z"/>
-                                            </g>
-                                        </svg>
-                                    </span>
-                                    <span v-else-if="evaluation.fulfilled == false">
-                                        <svg viewBox="0 0 41.756 41.756" class="check-icon">
-                                            <g>
-                                                <path d="M27.948,20.878L40.291,8.536c1.953-1.953,1.953-5.119,0-7.071c-1.951-1.952-5.119-1.952-7.07,0L20.878,13.809L8.535,1.465
-                                                    c-1.951-1.952-5.119-1.952-7.07,0c-1.953,1.953-1.953,5.119,0,7.071l12.342,12.342L1.465,33.22c-1.953,1.953-1.953,5.119,0,7.071
-                                                    C2.44,41.268,3.721,41.755,5,41.755c1.278,0,2.56-0.487,3.535-1.464l12.343-12.342l12.343,12.343
-                                                    c0.976,0.977,2.256,1.464,3.535,1.464s2.56-0.487,3.535-1.464c1.953-1.953,1.953-5.119,0-7.071L27.948,20.878z"/>
-                                            </g>
-                                        </svg>
-                                    </span>
-                                </td>
-                                <td class="align-middle">
-                                    {{ evaluation.text }}
-                                </td>
-                            </tr>
+                                <tr v-for="(evaluation, evaluationIdx) in filteredEvaluations(department.department__id)" v-bind:key="'B' + evaluationIdx">
+                                    <td class="align-middle font-weight-bold">
+                                        {{ evaluation.criterion__name }}
+                                    </td>
+                                    <td class="align-middle text-center font-weight-bold">
+                                        <span v-if="evaluation.fulfilled == true">
+                                            <svg viewBox="0 0 45.701 45.7" class="check-icon">
+                                                <g>
+                                                    <path d="M20.687,38.332c-2.072,2.072-5.434,2.072-7.505,0L1.554,26.704c-2.072-2.071-2.072-5.433,0-7.504
+                                                        c2.071-2.072,5.433-2.072,7.505,0l6.928,6.927c0.523,0.522,1.372,0.522,1.896,0L36.642,7.368c2.071-2.072,5.433-2.072,7.505,0
+                                                        c0.995,0.995,1.554,2.345,1.554,3.752c0,1.407-0.559,2.757-1.554,3.752L20.687,38.332z"/>
+                                                </g>
+                                            </svg>
+                                        </span>
+                                        <span v-else-if="evaluation.fulfilled == false">
+                                            <svg viewBox="0 0 41.756 41.756" class="check-icon">
+                                                <g>
+                                                    <path d="M27.948,20.878L40.291,8.536c1.953-1.953,1.953-5.119,0-7.071c-1.951-1.952-5.119-1.952-7.07,0L20.878,13.809L8.535,1.465
+                                                        c-1.951-1.952-5.119-1.952-7.07,0c-1.953,1.953-1.953,5.119,0,7.071l12.342,12.342L1.465,33.22c-1.953,1.953-1.953,5.119,0,7.071
+                                                        C2.44,41.268,3.721,41.755,5,41.755c1.278,0,2.56-0.487,3.535-1.464l12.343-12.342l12.343,12.343
+                                                        c0.976,0.977,2.256,1.464,3.535,1.464s2.56-0.487,3.535-1.464c1.953-1.953,1.953-5.119,0-7.071L27.948,20.878z"/>
+                                                </g>
+                                            </svg>
+                                        </span>
+                                    </td>
+                                    <td class="align-middle">
+                                        {{ evaluation.text }}
+                                    </td>
+                                </tr>
                         </tbody>
+                        
                     </template>
                 </table>
             </div>
@@ -157,7 +158,7 @@ export default {
             return this.evaluations.filter(evaluation => evaluation.fulfilled == null)
         },
         finalResult () {
-            return ((this.evaluationsFulfilled.length/(this.evaluations.length - this.evaluationsNotApplicable.length)) * 100).toFixed(2)
+            return ((this.evaluationsFulfilled.length/(this.evaluations.length - this.evaluationsNotApplicable.length)) * 100).toFixed(1)
         }
     },
     methods: {

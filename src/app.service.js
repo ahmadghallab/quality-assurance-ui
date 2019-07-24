@@ -167,7 +167,17 @@ const appService = {
       axios.post('/evaluation/save', data)
         .then(() => resolve()).catch(response => reject(response.status))
     })
-  }
+  },
+  displayManagementEvaluation (data) {
+    return new Promise((resolve, reject) => {
+      axios.get(`/management/${data.managementId}/evaluation/display?month=${data.month}&year=${data.year}`)
+        .then(response => {
+          resolve(response.data)
+        }).catch(response => {
+          reject(response.status)
+        })
+    })
+  },
 }
 
 export default appService

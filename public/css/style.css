@@ -6,6 +6,9 @@ body {
   text-align: right;
   font-size: 14px !important;
 }
+.text-muted-white {
+  color: rgba(255,255,255,0.8);
+}
 .list {
   border-bottom: 1px solid;
   padding: 20px;
@@ -44,6 +47,9 @@ ul {
 }
 label, .clickable {
   cursor: pointer;
+}
+label {
+  font-weight: bold;
 }
 .wrapper {
   margin: 70px auto 50px;

@@ -1,9 +1,10 @@
 <template>  
     <div>
-        <Loader v-if="retrieveUnitLoader && listUnitEvaluationLoader" />
+        <Loader v-if="listUnitEvaluationLoader" />
         <div v-else>
             <div class="card__header bg-primary text-white">
-                <h6 class="font-weight-bold mb-0">{{ unitName }}</h6>
+                <h6 class="font-weight-bold mb-1">{{ unit.name }}</h6>
+                <small class="text-muted-white">{{ unit.management__name }}</small>
             </div>
             <div class="card__body px-0 py-0">
                 <div v-for="(evaluation, evaluationIdx) in unitEvaluations"    
@@ -27,10 +28,16 @@
                                         name: 'unitEvaluationReport', 
                                         params: {id: unitId}, 
                                         query: {month: evaluation.month, year: evaluation.year}
-                                    }">تقرير
+                                    }">تقرير الوحدة
                                 </router-link>
-                                <button type="button" class="btn btn-light btn-sm mx-2">تزامن
-                                </button>
+                                <router-link 
+                                    class="btn btn-light btn-sm mx-1"
+                                    :to="{ 
+                                        name: 'managementEvaluationReport', 
+                                        params: {id: unit.management__id}, 
+                                        query: {month: evaluation.month, year: evaluation.year}
+                                    }">تقرير الادارة
+                                </router-link>
                                 <button type="button" class="btn btn-light btn-sm"
                                     v-on:click="toggleDeleteEvaluationModal = true">حذف
                                 </button>
@@ -47,13 +54,13 @@
                         <div slot="body" class="text-left">
                             <div class="card__header">
                                 <p class="text-muted">
-                                You are about to delete <span class="highlight info-highlight">{{ evaluation.month + '.' + evaluation.year }}</span> evaluation. No one will be able to access this evaluation ever again
+                                You are about to delete <span class="highlight primary-highlight">{{ evaluation.month + '.' + evaluation.year }}</span> evaluation. No one will be able to access this evaluation ever again
                                 </p>
                                 <p class="font-weight-bold mt-4 mb-0">Are you absolutely positive? There's no undo</p>
                             </div>
                             <div class="card__footer light-highlight border-top">
                                 <button type="button" @click="deleteUnitEvaluation(evaluationIdx, evaluation.month, evaluation.year)"
-                                    class="btn btn-info btn-sm ml-2" :disabled="deletingUnitEvaluation">
+                                    class="btn btn-primary btn-sm ml-2" :disabled="deletingUnitEvaluation">
                                     {{ deletingUnitEvaluation ? 'Deleting' : 'Yes, delete' }}
                                 </button>
                                 <button type="button" 
@@ -64,7 +71,9 @@
                         </div>
                     </Modal>
                 </div>
-                <p class="text-muted" v-if="!unitEvaluations.length">لا يوجد تقييمات حتي الان</p>
+                <div class="card__body text-muted" v-if="!unitEvaluations.length">
+                    لا يوجد تقييمات حتي الان
+                </div>
             </div>
             <div class="card__footer">
                 <form v-on:submit.prevent="createUnitEvaluation()">
@@ -76,7 +85,7 @@
                             <input type="number" v-model="year" class="form-control" placeholder="سنة">
                         </div>
                         <div class="col-auto">
-                            <button type="submit" class="btn btn-light" :disabled="createUnitEvalValidator">
+                            <button type="submit" class="btn btn-light btn-sm" :disabled="createUnitEvalValidator">
                                 {{ creatingUnitEvaluation ? 'رجاء الانتظار' : 'إنشاء' }}
                             </button>
                         </div>
@@ -104,14 +113,14 @@ export default {
             toggleEvaluation: false,
             deletingUnitEvaluation: false,
             creatingUnitEvaluation: false,
-            retrieveUnitLoader: true,
             listUnitEvaluationLoader: true,
             unitId: parseInt(this.$route.params.id),
             unitName: null,
             selectedEvaluation: null,
             month: null,
             year: null,
-            unitEvaluations: []
+            unitEvaluations: [],
+            unit: {}
         }
     },
     computed: {
@@ -136,13 +145,6 @@ export default {
                 this.toggleEvaluation = true
             }
         },
-        retrieveUnit () {
-            appService.retrieveUnit(this.unitId)
-                .then(data => {
-                    this.unitName = data.name
-                    this.retrieveUnitLoader = false
-                })
-        },
         createUnitEvaluation () {
             this.creatingUnitEvaluation = true
             appService.createUnitEvaluation({
@@ -162,7 +164,8 @@ export default {
         listUnitEvaluation () {
             appService.listUnitEvaluation(this.unitId)
                 .then(data => {
-                    this.unitEvaluations = data
+                    this.unitEvaluations = data.evaluations
+                    this.unit = data.unit
                     this.listUnitEvaluationLoader = false
                 })
         },
@@ -176,11 +179,11 @@ export default {
                 this.deletingUnitEvaluation = false
                 this.toggleDeleteEvaluationModal = false
                 this.unitEvaluations.splice(index, 1)
+                this.selectedEvaluation = null
             })
         }
     },
     created () {
-        this.retrieveUnit()
         this.listUnitEvaluation()
     }
 }

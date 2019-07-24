@@ -1,6 +1,6 @@
 <template>
     <div class="default-card">
-        <p class="mb-1 font-weight-bold">مرحبا بك</p>
-        <p class="muted">انت تستخدم تطبيق هيئة الرقابة والجودة</p>
+        <p class="mb-2 font-weight-bold">مرحبا بك</p>
+        <p class="text-muted mb-0">انت تستخدم تطبيق هيئة الرقابة والجودة</p>
     </div>
 </template>
