@@ -32,21 +32,25 @@
                             <Modal v-if="toggleAddTextModal">
                                 <div slot="body">
                                     <form v-on:submit.prevent="saveUnitEvaluation('text', evaluations[selectedCriteriaIdx[0]].text)">
-                                        <div class="form-group">
-                                            <textarea
-                                            id="criterionText"
-                                            autocomplete="off"
-                                            v-model="evaluations[selectedCriteriaIdx[0]].text" 
-                                            class="form-control"  
-                                            placeholder="+ ادخل نص"></textarea>
+                                        <div class="card__header">
+                                            <div class="form-group">
+                                                <textarea
+                                                id="criterionText"
+                                                autocomplete="off"
+                                                v-model="evaluations[selectedCriteriaIdx[0]].text" 
+                                                class="form-control"  
+                                                placeholder="+ ادخل نص"></textarea>
+                                            </div>
                                         </div>
-                                        <button type="submit" 
-                                            class="btn btn-info btn-sm ml-2"
-                                            :disabled="savingUnitEvaluation">حفظ</button>
-                                        <button type="button" 
-                                            class="btn btn-light btn-sm"
-                                            v-on:click="toggleAddTextModal = false">الغاء</button>
-                                        </form>
+                                        <div class="card__footer light-highlight border-top">
+                                            <button type="submit" 
+                                                class="btn btn-primary btn-sm ml-2"
+                                                :disabled="savingUnitEvaluation">حفظ</button>
+                                            <button type="button" 
+                                                class="btn btn-light btn-sm"
+                                                v-on:click="toggleAddTextModal = false">الغاء</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </Modal>
                         </div>
